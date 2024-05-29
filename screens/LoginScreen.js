@@ -107,11 +107,6 @@ export const LoginScreen = ({ navigation }) => {
           />
         </KeyboardAwareScrollView>
       </View>
-
-      {/* App info footer */}
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Expo Firebase Starter App</Text>
-      </View>
     </>
   );
 };
@@ -119,7 +114,7 @@ export const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: "#E6E6FA",
     paddingHorizontal: 12,
   },
   logoContainer: {
@@ -140,14 +135,14 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     fontWeight: "700",
-    color: Colors.orange,
+    color: "purple",
   },
   button: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
-    backgroundColor: Colors.orange,
+    backgroundColor: "purple",
     padding: 10,
     borderRadius: 8,
   },

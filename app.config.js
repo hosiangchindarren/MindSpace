@@ -2,17 +2,17 @@ import "dotenv/config";
 
 export default {
   expo: {
-    name: "Expo Firebase Starter",
+    name: "MindSpace",
     slug: "expo-firebase",
     privacy: "public",
     platforms: ["ios", "android"],
     version: "0.19.0",
     orientation: "portrait",
-    icon: "./assets/flame.png",
+    icon: "./assets/MINDSPACE.png",
     splash: {
-      image: "./assets/splash.png",
+      image: "./assets/loading.png",
       resizeMode: "cover",
-      backgroundColor: "#F57C00",
+      backgroundColor: "#E6E6FA",
     },
     updates: {
       fallbackToCacheTimeout: 0,
