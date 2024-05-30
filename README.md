@@ -1,0 +1,9 @@
+**MINDSPACE : WELLNESS APPLICATION**
+
+**INSTRUCTIONS**
+
+INSTALL DEPENDENCIES
+```npm install```
+
+START SERVER
+```npx expo start```
