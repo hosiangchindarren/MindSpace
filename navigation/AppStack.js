@@ -9,8 +9,21 @@ const Stack = createStackNavigator();
 export const AppStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Meditation" component={MeditationScreen} /> 
+      <Stack.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Meditation" 
+        component={MeditationScreen} 
+        options={{
+          headerTitleAlign: 'center',
+          headerLeft: () => null,
+        }} 
+      /> 
     </Stack.Navigator>
   );
 };
