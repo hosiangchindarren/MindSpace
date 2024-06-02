@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { signOut } from "firebase/auth";
 import { Colors, auth } from "../config";
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
   const handleLogout = () => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
@@ -18,7 +18,7 @@ export const HomeScreen = () => {
     console.log("Goal Setting button pressed");
   };
   const handleMeditation = () => {
-    console.log("Meditation button pressed");
+    navigation.navigate("Meditation"); 
   };
 
   const renderButton = (title, onPress, imageSource) => (
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     marginHorizontal: 10,
-    height: 100, // Fixed height for square buttons
-    width: 100,  // Fixed width for square buttons
-    borderRadius: 20, // Rounded edges
+    height: 100,
+    width: 100,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: "#000",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff", // Button background color
+    backgroundColor: "#ffffff",
   },
   buttonImage: {
     width: 40,
@@ -107,4 +107,5 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
 
