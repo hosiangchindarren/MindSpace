@@ -77,15 +77,15 @@ Milestone 3 - Extended system:
 
 **Tech Stack**
 
-<ins>Frontend:<\ins>
+<ins>Frontend:</ins>
 Framework : React Native 
 
-<ins>Backend:<\ins>
+<ins>Backend:</ins>
 Server and API : Node.js with Express.js 
 
 Database : Firebase Firestore 
 
-<ins>Additional Components:<\ins>
+<ins>Additional Components:</ins>
 State Management : Redux 
 
 Cloud storage for media : Firebase Storage 
