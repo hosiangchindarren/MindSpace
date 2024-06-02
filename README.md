@@ -129,5 +129,21 @@ Our motivation behind the project stems from recognising the importance of menta
 
 Potential users could be busy professionals that want to practice mindfulness on the go despite their busy schedules, students dealing with stress and anxiety that want a way to track their mood and identify patterns to better manage their emotions or wellness enthusiasts who want to engage in mindfulness activities to increase self-awareness and resilience. 
 
+**Splash Screen**
+
 ![Example Image](https://drive.google.com/uc?id=1BdZG6ZoPUNATCI_5nW-7U5bfqmPSueMU)
 
+**Login/Sign Up/Reset Password Feature**
+
+![Example Image](https://drive.google.com/uc?id=1g_gqHvyIewj7bYuwRsZNXhfdBGoIPev2)
+![Example Image](https://drive.google.com/uc?id=1rniTr_oDjrXrhawVGqUWgVUxggTDtnar)
+![Example Image](https://drive.google.com/uc?id=1lsPNq2d3Z2vS0Fr5R5MaYlnt3Yy7RFPz)
+
+**Home Screen**
+
+![Example Image](https://drive.google.com/uc?id=1VEnGBQepVpqHe4246VKawW9DiIDhBNEg)
+
+**Meditation Feature**
+
+![Example Image](https://drive.google.com/uc?id=1qg1C017-ivZKj8BvslA2WaCCfNN-fwkY)
+![Example Image](https://drive.google.com/uc?id=1LR6-X0UpLWbKqPTKcqMyFgLF8r5CeUTr)
