@@ -68,8 +68,9 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 <ins>Timeline</ins>
 
 Milestone 1 - Technical proof of concept:
+- Login feature completed
 - Establish a backend using Firebase
-- 2 functional pages that can be navigated between 
+- Functional pages that can be navigated between 
 
 Milestone 2 - Prototype:
 - Full Implementation of the core features
