@@ -141,7 +141,7 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 **Home Screen**
 
-![Example Image](https://drive.google.com/uc?id=1VEnGBQepVpqHe4246VKawW9DiIDhBNEg)
+![Example Image](https://drive.google.com/uc?id=1PqMrNgxBf7WO87ZWMChk9Sxn5e7S0ZSt)
 
 **Meditation Feature**
 
