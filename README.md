@@ -25,11 +25,12 @@ As a wellness enthusiast, I want access to guided reflection exercises and mindf
 - Create, edit, and delete journal entries.
 - Mood tracking with customizable mood tags.
 - Goal setting and progress tracking.
+- Meditation guides, Music Player and Timer.
   
 <ins>Extension:</ins>
 
+- Showcase statistical data based on mood tracking history.
 - Guided reflection exercises and prompts.
-- Mindfulness activities such as meditation sessions.
 - Wellness assessments to help users identify areas for improvement. 
 
 
@@ -43,7 +44,8 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 
 <ins>Home Page</ins>
 
-- clickable 4 features (journalling, etc..)
+- 4 clickable features (journalling, etc..)
+- Sign out
 
 <ins>Journaling</ins>
 
@@ -58,8 +60,8 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 
 <ins>Goal Setting</ins>
 
-- add, delete, completed (clickable tick to complete), 
-- completed and current goals section 
+- add, delete, complete goals (clickable tick to complete), 
+- 2 tabs: completed goals and current goals
 
 <ins>Meditation</ins>
 
@@ -109,16 +111,6 @@ Push Notifications : Firebase Cloud Messaging (FCM) for push notifications
 Analytics : Firebase Analytics or Mixpanel for tracking user interactions 
 
 Testing : Jest and Detox for automated testing of React Native applications
-
-
-**Qualifications**
-
-NIL 
-
-**Software Engineering**
-
-NIL 
-
 
 **How are we different from similar platforms**
 
