@@ -64,16 +64,16 @@ Timer and white noise player to aid in meditation
 <ins>Timeline</ins>
 
 Milestone 1 - Technical proof of concept:
-Linking a database to portions of the UI
-2 functional pages that can be navigated between 
+- Establish a backend using Firebase
+- 2 functional pages that can be navigated between 
 
 Milestone 2 - Prototype:
-Full Implementation of the core features
-Linking database to the aforementioned functions. 
+- Full Implementation of the core features
+- Linking database to the aforementioned functions. 
 
 Milestone 3 - Extended system:
-Implement all extension features.
-Conduct testing and bug fixing.
+- Implement all extension features.
+- Conduct testing and bug fixing.
 
 **Tech Stack**
 
