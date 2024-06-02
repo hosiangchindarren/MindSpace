@@ -64,7 +64,7 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 <ins>Meditation</ins>
 
 - Instructions on carrying out different types meditation
-- Timer and white noise player to aid in meditation
+- Timer and music player to aid in meditation
 
 **Features to be completed by Mid June:**
 
@@ -73,7 +73,8 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 Milestone 1 - Technical proof of concept:
 - Login feature completed
 - Establish a backend using Firebase
-- Functional pages that can be navigated between 
+- Functional pages that can be navigated between
+- Finish Meditation Feature
 
 Milestone 2 - Prototype:
 - Full Implementation of the core features
@@ -129,21 +130,21 @@ Our motivation behind the project stems from recognising the importance of menta
 
 Potential users could be busy professionals that want to practice mindfulness on the go despite their busy schedules, students dealing with stress and anxiety that want a way to track their mood and identify patterns to better manage their emotions or wellness enthusiasts who want to engage in mindfulness activities to increase self-awareness and resilience. 
 
-**Splash Screen**
+<h1>Splash Screen</h1>
 
 ![Example Image](https://drive.google.com/uc?id=1BdZG6ZoPUNATCI_5nW-7U5bfqmPSueMU)
 
-**Login/Sign Up/Reset Password Feature**
+<h1>Login/Sign Up/Reset Password Feature</h1>
 
 ![Example Image](https://drive.google.com/uc?id=1g_gqHvyIewj7bYuwRsZNXhfdBGoIPev2)
 ![Example Image](https://drive.google.com/uc?id=1rniTr_oDjrXrhawVGqUWgVUxggTDtnar)
 ![Example Image](https://drive.google.com/uc?id=1lsPNq2d3Z2vS0Fr5R5MaYlnt3Yy7RFPz)
 
-**Home Screen**
+<h1>Home Screen</h1>
 
-![Example Image](https://drive.google.com/uc?id=1VEnGBQepVpqHe4246VKawW9DiIDhBNEg)
+![Example Image](https://drive.google.com/uc?id=1PqMrNgxBf7WO87ZWMChk9Sxn5e7S0ZSt)
 
-**Meditation Feature**
+<h1>Meditation Feature</h1>
 
 ![Example Image](https://drive.google.com/uc?id=1qg1C017-ivZKj8BvslA2WaCCfNN-fwkY)
 ![Example Image](https://drive.google.com/uc?id=1LR6-X0UpLWbKqPTKcqMyFgLF8r5CeUTr)

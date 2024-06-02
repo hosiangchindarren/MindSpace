@@ -57,6 +57,13 @@ const MeditationScreen = () => {
     "This form uses bowls, gongs, and other instruments to create sound vibrations that help focus the mind and bring it into a more relaxed state."
   ]
 
+  const handleBackButtonPress = async () => {
+    if (sound) {
+      await sound.unloadAsync();
+    }
+    navigation.goBack();
+  };
+
   const handleUserTimeInputChange = (text) => {
     setUserTimeInput(text);
   };
@@ -171,7 +178,7 @@ const MeditationScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity onPress={handleBackButtonPress} style={styles.backButton}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
         <TouchableOpacity
