@@ -21,13 +21,16 @@ As a wellness enthusiast, I want access to guided reflection exercises and mindf
 **Features**
 
 <ins>Core:</ins>
-Create, edit, and delete journal entries.
-Mood tracking with customizable mood tags.
-Goal setting and progress tracking.
+
+- Create, edit, and delete journal entries.
+- Mood tracking with customizable mood tags.
+- Goal setting and progress tracking.
+  
 <ins>Extension:</ins>
-Guided reflection exercises and prompts.
-Mindfulness activities such as meditation sessions.
-Wellness assessments to help users identify areas for improvement. 
+
+- Guided reflection exercises and prompts.
+- Mindfulness activities such as meditation sessions.
+- Wellness assessments to help users identify areas for improvement. 
 
 
 **Project Scope**
