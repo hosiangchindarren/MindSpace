@@ -34,30 +34,34 @@ Wellness assessments to help users identify areas for improvement.
 
 The IOS/Android App consists of various features - Journal Entries, Mood Tracking, Goal Setting and Meditation Guides - that help users practice mindfulness. 
 
+<ins>Login Page</ins>
+
+- Sign up, Login, Forget Password (Reset via Email)
+
 <ins>Home Page</ins>
 
-clickable 4 features (journalling, etc..)
+- clickable 4 features (journalling, etc..)
 
 <ins>Journaling</ins>
 
-pictures, videos, text 
-track date, sort by date 
+- pictures, videos, text 
+- track date, sort by date 
 
 <ins>Mood Tracking</ins>
 
-display 5 faces of varying moods
-add a prompt of “how you're feeling” after clicking on faces. 
-include statistics and mood history
+- display 5 faces of varying moods
+- add a prompt of “how you're feeling” after clicking on faces. 
+- include statistics and mood history
 
 <ins>Goal Setting</ins>
 
-add, delete, completed (clickable tick to complete), 
-completed and current goals section 
+- add, delete, completed (clickable tick to complete), 
+- completed and current goals section 
 
 <ins>Meditation</ins>
 
-Instructions on carrying out different types meditation
-Timer and white noise player to aid in meditation
+- Instructions on carrying out different types meditation
+- Timer and white noise player to aid in meditation
 
 **Features to be completed by Mid June:**
 
