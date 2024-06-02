@@ -10,6 +10,14 @@ const MeditationScreen = () => {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [userTimeInput, setUserTimeInput] = useState('');
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [sound, setSound] = useState(null);
+
+  const tracks = [
+    { name: "Moonlight Echoes", file: require('../assets/moonlight-echoes.mp3') },
+    { name: "Once in Paris", file: require('../assets/once-in-paris.mp3') },
+    { name: "Perfect Beauty", file: require('../assets/perfect-beauty.mp3') },
+  ];
 
   const headers = [
     "Focused attention",
@@ -89,13 +97,13 @@ const MeditationScreen = () => {
       startTimer(); // Start the timer countdown
     }
   };
-  
+
   const startTimer = () => {
     const timeInSeconds = parseInt(userTimeInput) * 60;
     setTimerActive(true);
     setTimerSeconds(timeInSeconds);
   };
-  
+
   const stopTimer = () => {
     setTimerActive(false);
     setTimerSeconds(0);
@@ -106,6 +114,47 @@ const MeditationScreen = () => {
       require('../assets/alarm.mp3')
     );
     await sound.playAsync();
+  };
+
+  const play = async () => {
+    if (currentTrackIndex < 0 || currentTrackIndex >= tracks.length) {
+      console.error('Invalid track index:', currentTrackIndex);
+      return;
+    }
+  
+    const selectedTrack = tracks[currentTrackIndex];
+    if (!selectedTrack || !selectedTrack.file) {
+      console.error('Invalid or missing track:', selectedTrack);
+      return;
+    }
+  
+    try {
+      if (sound) {
+        await sound.unloadAsync();
+      }
+  
+      const { sound: newSound } = await Audio.Sound.createAsync(selectedTrack.file);
+      setSound(newSound);
+      await newSound.playAsync();
+    } catch (error) {
+      console.error('Failed to play audio:', error);
+    }
+  };
+
+  const pause = async () => {
+    if (sound) {
+      await sound.pauseAsync();
+    }
+  };
+
+  const skipToPreviousTrack = () => {
+    const previousIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+    setCurrentTrackIndex(previousIndex);
+  };
+
+  const skipToNextTrack = () => {
+    const nextIndex = (currentTrackIndex + 1) % tracks.length;
+    setCurrentTrackIndex(nextIndex);
   };
 
   const renderHeader = (title, content, index) => (
@@ -162,13 +211,36 @@ const MeditationScreen = () => {
               {(timerSeconds % 60).toString().padStart(2, '0')}
             </Text>
             {timerActive && (
-  <           TouchableOpacity onPress={stopTimer} style={styles.setTimerButton}>
+              <           TouchableOpacity onPress={stopTimer} style={styles.setTimerButton}>
                 <Text style={styles.setTimerButtonText}>Stop Timer</Text>
               </TouchableOpacity>
             )}
           </View>
         </View>
       )}
+      <View style={styles.musicDisplay}>
+        {tracks[currentTrackIndex] ? (
+          <Text style={styles.currentTrackText}>
+            Current Track: {tracks[currentTrackIndex] ? tracks[currentTrackIndex].name : 'No track selected'}
+          </Text>
+        ) : (
+          <Text style={styles.currentTrackText}>No track selected</Text>
+        )}
+        <View style={styles.controlButtons}>
+          <TouchableOpacity onPress={skipToPreviousTrack} style={styles.controlButton}>
+            <Text style={styles.controlButtonText}>Previous Track</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={play} style={styles.controlButton}>
+            <Text style={styles.controlButtonText}>Play</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={pause} style={styles.controlButton}>
+            <Text style={styles.controlButtonText}>Pause</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={skipToNextTrack} style={styles.controlButton}>
+            <Text style={styles.controlButtonText}>Next Track</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -228,7 +300,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 5,
   },
-  referenceText : {
+  referenceText: {
     fontSize: 10,
     fontWeight: 'bold',
     color: 'purple',
@@ -263,7 +335,31 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     color: '#4B0082',
-  }
+  },
+  controlButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  controlButton: {
+    padding: 10,
+    backgroundColor: '#9370DB',
+    borderRadius: 8,
+  },
+  controlButtonText: {
+    fontSize: 16,
+    color: 'white',
+  },
+  currentTrackText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: 'white',
+  },
+  musicDisplay: {
+    alignItems: 'center',
+    marginTop: 20,
+    backgroundColor: '#4B0082',
+  },
 });
 
 export default MeditationScreen;
