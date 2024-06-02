@@ -30,6 +30,7 @@ export const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/MINDSPACE.png')} style={styles.logo}/>
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
           {renderButton("Journal", handleJournal, require('../assets/Journal.png'))}
@@ -103,6 +104,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.white,
     fontWeight: "700",
+  },
+  logo: {
+    width: 1000,
+    height: 200,
+    resizeMode: "contain",
+    marginBottom: 20,
   }
 });
 
