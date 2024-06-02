@@ -34,6 +34,26 @@ Wellness assessments to help users identify areas for improvement.
 
 The IOS/Android App consists of various features - Journal Entries, Mood Tracking, Goal Setting and Meditation Guides - that help users practice mindfulness. 
 
+<ins>Home Page</ins>
+clickable 4 features (journalling, etc..)
+
+<ins>Journaling</ins>
+pictures, videos, text 
+track date, sort by date 
+
+<ins>Mood Tracking</ins>
+display 5 faces of varying moods
+add a prompt of “how you're feeling” after clicking on faces. 
+include statistics and mood history
+
+<ins>Goal Setting</ins>
+add, delete, completed (clickable tick to complete), 
+completed and current goals section 
+
+<ins>Meditation*</ins>
+Instructions on carrying out different types meditation
+Timer and white noise player to aid in meditation
+
 **Features to be completed by Mid June:**
 
 <ins>Timeline</ins>
@@ -73,6 +93,7 @@ Testing : Jest and Detox for automated testing of React Native applications
 NIL 
 
 **Software Engineering**
+
 NIL 
 
 
@@ -87,26 +108,6 @@ Our motivation behind the project stems from recognising the importance of menta
 Potential users could be busy professionals that want to practice mindfulness on the go despite their busy schedules, students dealing with stress and anxiety that want a way to track their mood and identify patterns to better manage their emotions or wellness enthusiasts who want to engage in mindfulness activities to increase self-awareness and resilience. 
 
 
-
-**Home Page**
-clickable 4 features (journalling, etc..)
-
-**Journaling**
-pictures, videos, text 
-track date, sort by date 
-
-**Mood Tracking**
-display 5 faces of varying moods
-add a prompt of “how you're feeling” after clicking on faces. 
-include statistics and mood history
-
-**Goal Setting**
-add, delete, completed (clickable tick to complete), 
-completed and current goals section 
-
-**Meditation**
-Instructions on carrying out different types meditation
-Timer and white noise player to aid in meditation
 
 
 
