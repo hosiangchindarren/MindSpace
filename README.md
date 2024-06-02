@@ -64,7 +64,7 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 <ins>Meditation</ins>
 
 - Instructions on carrying out different types meditation
-- Timer and white noise player to aid in meditation
+- Timer and music player to aid in meditation
 
 **Features to be completed by Mid June:**
 
@@ -73,7 +73,8 @@ The IOS/Android App consists of various features - Journal Entries, Mood Trackin
 Milestone 1 - Technical proof of concept:
 - Login feature completed
 - Establish a backend using Firebase
-- Functional pages that can be navigated between 
+- Functional pages that can be navigated between
+- Finish Meditation Feature
 
 Milestone 2 - Prototype:
 - Full Implementation of the core features
