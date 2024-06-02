@@ -146,5 +146,5 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 <h1>Meditation Feature</h1>
 
-![Example Image](https://drive.google.com/uc?id=1qg1C017-ivZKj8BvslA2WaCCfNN-fwkY)
-![Example Image](https://drive.google.com/uc?id=1LR6-X0UpLWbKqPTKcqMyFgLF8r5CeUTr)
+![Example Image](https://drive.google.com/uc?id=1qMjdUj-dBs2cVZMbEb87R4dEyUWdezYa)
+![Example Image](https://drive.google.com/uc?id=1bKri5TZShd3PbRWu7ay91YtDktScEEq6)
