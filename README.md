@@ -77,19 +77,25 @@ Milestone 3 - Extended system:
 
 **Tech Stack**
 
-Frontend: 
+<ins>Frontend:<\ins>
 Framework : React Native 
 
-Backend: 
+<ins>Backend:<\ins>
 Server and API : Node.js with Express.js 
+
 Database : Firebase Firestore 
 
-Additional Components: 
+<ins>Additional Components:<\ins>
 State Management : Redux 
+
 Cloud storage for media : Firebase Storage 
+
 Authentication : Firebase Authentication for user authentication 
+
 Push Notifications : Firebase Cloud Messaging (FCM) for push notifications 
+
 Analytics : Firebase Analytics or Mixpanel for tracking user interactions 
+
 Testing : Jest and Detox for automated testing of React Native applications
 
 
