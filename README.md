@@ -142,7 +142,7 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 <h1>Home Screen</h1>
 
-![Example Image](https://drive.google.com/uc?id=1PqMrNgxBf7WO87ZWMChk9Sxn5e7S0ZSt)
+![Example Image](https://drive.google.com/uc?id=18cQPF2ZWxV8fgLx-yMpse16C9nq-yH2r)
 
 <h1>Meditation Feature</h1>
 
