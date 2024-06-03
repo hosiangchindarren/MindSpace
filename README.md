@@ -142,6 +142,7 @@ Potential users could be busy professionals that want to practice mindfulness on
 ![Example Image](https://drive.google.com/uc?id=1bKri5TZShd3PbRWu7ay91YtDktScEEq6)
 
 <h1>Goal Setting Feature</h1>
+
 ![Example Image](https://drive.google.com/uc?id=13jL-_GPTpvsVKyP_ZQ6fWA_bV1OzD8j)
 ![Example Image](https://drive.google.com/uc?id=1xl9qc-vB_DbeCOPKeG3G0FMVItkSMxb5)
 ![Example Image](https://drive.google.com/uc?id=1bwWpmSZGEoE0bQOgfyKe53yp9fFbb23A)
