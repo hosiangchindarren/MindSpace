@@ -140,3 +140,6 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 ![Example Image](https://drive.google.com/uc?id=1qMjdUj-dBs2cVZMbEb87R4dEyUWdezYa)
 ![Example Image](https://drive.google.com/uc?id=1bKri5TZShd3PbRWu7ay91YtDktScEEq6)
+
+**Project Log**
+https://docs.google.com/spreadsheets/d/1wf6Rqj5oX6-DM4eb08vcTcHm9Ddp1o3Nd647brcG-4U/edit?usp=sharing
