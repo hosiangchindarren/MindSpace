@@ -24,7 +24,6 @@ export const LoginScreen = ({ navigation }) => {
     <>
       <View isSafe style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid={true}>
-          {/* LogoContainer: consist app logo and screen title */}
           <View style={styles.logoContainer}>
             <Logo uri={Images.logo} />
             <Text style={styles.screenTitle}>Welcome back!</Text>
@@ -46,7 +45,6 @@ export const LoginScreen = ({ navigation }) => {
               handleBlur,
             }) => (
               <>
-                {/* Input fields */}
                 <TextInput
                   name="email"
                   leftIconName="email"
@@ -81,18 +79,15 @@ export const LoginScreen = ({ navigation }) => {
                   error={errors.password}
                   visible={touched.password}
                 />
-                {/* Display Screen Error Messages */}
                 {errorState !== "" ? (
                   <FormErrorMessage error={errorState} visible={true} />
                 ) : null}
-                {/* Login button */}
                 <Button style={styles.button} onPress={handleSubmit}>
                   <Text style={styles.buttonText}>Login</Text>
                 </Button>
               </>
             )}
           </Formik>
-          {/* Button to navigate to SignupScreen to create a new account */}
           <Button
             style={styles.borderlessButtonContainer}
             borderless
@@ -135,14 +130,14 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     fontWeight: "700",
-    color: "purple",
+    color: "#4B0082",
   },
   button: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
-    backgroundColor: "purple",
+    backgroundColor: "#4B0082",
     padding: 10,
     borderRadius: 8,
   },

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
-    backgroundColor: "purple",
+    backgroundColor: "#4B0082",
     padding: 10,
     borderRadius: 8,
   },
