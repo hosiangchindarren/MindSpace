@@ -130,7 +130,7 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 ![Example Image](https://drive.google.com/uc?id=1IwNY0LPZmobKn5BdbQ7w7mcbGg9pY2c2)
 ![Example Image](https://drive.google.com/uc?id=1sUOqjVz12EwBUtlfPS2gfLOsmgyMVc6w)
-![Example Image](https://drive.google.com/uc?id=1sUOqjVz12EwBUtlfPS2gfLOsmgyMVc6w)
+![Example Image](https://drive.google.com/uc?id=1eTzu0zP-sAtU4iGbPOrk5WxULNf_NBSu)
 
 <h1>Home Screen</h1>
 
