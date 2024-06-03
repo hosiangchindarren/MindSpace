@@ -101,7 +101,7 @@ const MeditationScreen = () => {
     if (!isNaN(timeInMinutes)) {
       setTimerSeconds(timeInMinutes * 60);
       setUserTimeInput('');
-      startTimer(); // Start the timer countdown
+      startTimer(); 
     }
   };
 

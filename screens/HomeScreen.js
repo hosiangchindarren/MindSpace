@@ -15,7 +15,7 @@ export const HomeScreen = ({ navigation }) => {
     console.log("Mood Tracking button pressed");
   };
   const handleGoalSetting = () => {
-    console.log("Goal Setting button pressed");
+    navigation.navigate("Goals");
   };
   const handleMeditation = () => {
     navigation.navigate("Meditation"); 
