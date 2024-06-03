@@ -128,13 +128,13 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 <h1>Login/Sign Up/Reset Password Feature</h1>
 
-![Example Image](https://drive.google.com/uc?id=1g_gqHvyIewj7bYuwRsZNXhfdBGoIPev2)
-![Example Image](https://drive.google.com/uc?id=1rniTr_oDjrXrhawVGqUWgVUxggTDtnar)
-![Example Image](https://drive.google.com/uc?id=1lsPNq2d3Z2vS0Fr5R5MaYlnt3Yy7RFPz)
+![Example Image](https://drive.google.com/uc?id=1IwNY0LPZmobKn5BdbQ7w7mcbGg9pY2c2)
+![Example Image](https://drive.google.com/uc?id=1sUOqjVz12EwBUtlfPS2gfLOsmgyMVc6w)
+![Example Image](https://drive.google.com/uc?id=1sUOqjVz12EwBUtlfPS2gfLOsmgyMVc6w)
 
 <h1>Home Screen</h1>
 
-![Example Image](https://drive.google.com/uc?id=1oOZ5tYwlC38nVR3Bcc26-m12PiqWeSq0)
+![Example Image](https://drive.google.com/uc?id=1nqTZuASJld6iWTaWaj-NwXCPYurgMN8U)
 
 <h1>Meditation Feature</h1>
 
