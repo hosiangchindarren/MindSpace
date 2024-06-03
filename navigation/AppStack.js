@@ -6,6 +6,9 @@ import MeditationScreen from "../screens/MeditationScreen";
 import GoalSettingScreen from "../screens/GoalSettingScreen";
 import AddGoalScreen from "../screens/AddGoalScreen";
 import EditGoalScreen from '../screens/EditGoalScreen';
+import MoodTrackingScreen from '../screens/MoodTrackingScreen';
+import MoodHistoryScreen from '../screens/MoodHistoryScreen';
+import MoodStatisticsScreen from '../screens/MoodStatisticsScreen';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +40,27 @@ export const AppStack = () => {
       <Stack.Screen 
         name="Add Goal" 
         component={AddGoalScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Mood History" 
+        component={MoodHistoryScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Mood Tracking" 
+        component={MoodTrackingScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Mood Statistics" 
+        component={MoodStatisticsScreen}
         options={{
           headerTitleAlign: 'center',
         }}  

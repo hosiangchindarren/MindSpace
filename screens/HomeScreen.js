@@ -12,7 +12,7 @@ export const HomeScreen = ({ navigation }) => {
     console.log("Journal button pressed");
   };
   const handleMoodTracking = () => {
-    console.log("Mood Tracking button pressed");
+    navigation.navigate("Mood Tracking");
   };
   const handleGoalSetting = () => {
     navigation.navigate("Goals");
