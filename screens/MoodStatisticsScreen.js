@@ -38,7 +38,7 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
           if (!weekly[mood]) weekly[mood] = {};
           weekly[mood][weekOfYear] = (weekly[mood][weekOfYear] || 0) + 1;
 
-          const month = format(createdAt, 'MMMM');
+          const month = format(createdAt, 'MMMM yyyy');
           if (!monthly[mood]) monthly[mood] = {};
           monthly[mood][month] = (monthly[mood][month] || 0) + 1;
 
@@ -56,11 +56,17 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
     }
   }, [user]);
 
-  const allMoods = ['Happy', 'Content', 'Neutral', 'Sad', 'Angry'];
+  const allMoods = [
+    { mood: 'Happy', label: 'Happy 😃' },
+    { mood: 'Content', label: 'Content 😊' },
+    { mood: 'Neutral', label: 'Neutral 😐' },
+    { mood: 'Sad', label: 'Sad 😟' },
+    { mood: 'Angry', label: 'Angry 😠' }
+  ];
 
   const prepareChartData = (stats) => {
-    const labels = allMoods;
-    const data = labels.map(mood => stats[mood] ? Object.values(stats[mood]).reduce((a, b) => a + b, 0) : 0);
+    const labels = allMoods.map(mood => mood.label);
+    const data = allMoods.map(mood => stats[mood.mood] ? Object.values(stats[mood.mood]).reduce((a, b) => a + b, 0) : 0);
     return {
       labels,
       datasets: [
@@ -85,7 +91,7 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
   const getStatsForSelectedWeek = () => {
     const week = currentDate.getWeek();
     const weekStats = {};
-    allMoods.forEach(mood => {
+    allMoods.forEach(({ mood }) => {
       weekStats[mood] = {};
     });
     Object.keys(weeklyStats).forEach(mood => {
@@ -100,9 +106,9 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
   };
 
   const getStatsForSelectedMonth = () => {
-    const month = format(currentDate, 'MMMM');
+    const month = format(currentDate, 'MMMM yyyy');
     const monthStats = {};
-    allMoods.forEach(mood => {
+    allMoods.forEach(({ mood }) => {
       monthStats[mood] = {};
     });
     Object.keys(monthlyStats).forEach(mood => {
@@ -119,7 +125,7 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
   const getStatsForSelectedYear = () => {
     const year = format(currentDate, 'yyyy');
     const yearStats = {};
-    allMoods.forEach(mood => {
+    allMoods.forEach(({ mood }) => {
       yearStats[mood] = {};
     });
     Object.keys(yearlyStats).forEach(mood => {
@@ -141,9 +147,9 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
         {getUniqueDates(stats).map((date) => (
           <Text key={date}>{date}</Text>
         ))}
-        {allMoods.map((mood) => (
+        {allMoods.map(({ mood, label }) => (
           <View key={mood} style={styles.statItem}>
-            <Text>{mood}</Text>
+            <Text>{label}</Text>
             <Text>{stats[mood] ? Object.values(stats[mood]).reduce((a, b) => a + b, 0) : 0}</Text>
           </View>
         ))}
@@ -185,7 +191,7 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
       <FlatList
         data={[
           { label: `Week ${currentDate.getWeek()}`, key: 'week' },
-          { label: format(currentDate, 'MMMM'), key: 'month' },
+          { label: format(currentDate, 'MMMM yyyy'), key: 'month' },
           { label: format(currentDate, 'yyyy'), key: 'year' }
         ]}
         renderItem={({ item }) => renderStats(item.label, 
