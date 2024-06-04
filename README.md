@@ -1,5 +1,6 @@
-
-![Alt text](assets/MINDSPACE.png)
+<p align="center">
+  <img width="460" height="300" src=assets/MINDSPACE.png>
+</p>
 
 **Proposed Level of Achievement:**
 
