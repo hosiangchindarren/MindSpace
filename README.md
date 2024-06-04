@@ -4,7 +4,7 @@ Project Gemini
 
 **Motivation** 
 
-Our motivation stems from recognizing the importance of mental well-being and the therapeutic benefits of journaling. We aim to create a digital platform that not only facilitates journaling but also promotes overall wellness by incorporating features such as mood tracking, goal setting, and reflection exercises. During a Sectional Class, me and my teammate were having a discussion about mindfulness, when our groupmates dialed in on our conversation. We realised they were unaware of what the term ‘mindfulness’ meant and some had never even heard it before. After our explanation, they cited the lack of time, information and general inconvenience associated with physical writing as barriers preventing them from practicing it. Thus, the idea was born to create an app that could help use technology to streamline the process of practicing mindfulness while making it easier to make a habit out of it. 
+As university students, my project partner and I have observed that mindfulness is not well known among our peers. Many have either never heard of it or are unsure of its meaning. Additionally, they face numerous barriers to practicing mindfulness, such as a lack of time, the inconvenience of traditional journaling, and uncertainty about how to begin. Motivated by these challenges, we aimed to create MindSpace, a mobile application that leverages technology to make mindfulness accessible and convenient. Our goal is to help individuals integrate mindfulness into their daily lives, overcoming obstacles and promoting mental well-being.
 
 
 **Aim**
@@ -14,9 +14,13 @@ We hope to provide users with a user-friendly journaling application that not on
 
 **User Stories**
 
-As a busy professional, I want to have a convenient way to journal my thoughts and feelings on-the-go.
-As a student dealing with stress and anxiety, I want to track my mood and identify patterns to better manage my emotions.
-As a wellness enthusiast, I want access to guided reflection exercises and mindfulness activities to improve my self-awareness and resilience.
+1. As a user, I want to easily access a journaling feature, so I can document my thoughts and experiences throughout the day.
+2. As a user, I want to search through my past journal entries, so I can reflect on my progress over time.
+3. As a user, I want a way to track my mood throughout the day, so i can track my emotional patterns.
+4. As a user, I want to add notes to my mood entries, so I can provide context for why I felt a certain way.
+5. As a user, I want to set mindfulness goals, so I can stay motivated to practice regularly.
+6. As a user, I want to access guided meditation sessions and the ability to choose the duration of my meditation sessions, so I can fit them into my schedule.
+7. As a user, I want to customize the app’s settings to reflect my preferences for features and notifications, so the app works best for me.
 
 **Features**
 
@@ -36,7 +40,10 @@ As a wellness enthusiast, I want access to guided reflection exercises and mindf
 
 **Project Scope**
 
-The IOS/Android App consists of various features - Journal Entries, Mood Tracking, Goal Setting and Meditation Guides - that help users practice mindfulness. 
+MindSpace is a wellness app for iOS and Android that helps users practice mindfulness through features like Journal Entries, Mood Tracking, Goal Setting, and Meditation Guides.
+
+The app’s simplistic and intuitive UI/UX design aligns with mindfulness principles, reducing navigation confusion and helping users stay focused. Our core features encourage consistent use, allowing users to continually benefit from mindfulness. Personalized functions and activity tracking make the experience deeply personal and introspective, enabling users to monitor their progress and growth.
+
 
 <ins>Login Page</ins>
 
