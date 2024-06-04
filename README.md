@@ -2,6 +2,10 @@
   <img src=assets/MINDSPACE.png>
 </p>
 
+<h1>Last update:4/6/2024 any further updates to this readme will be on:<\h1>
+
+https://docs.google.com/document/d/1SRgPVN5KKUfDGZsgG2oywxG7FnQ7_LoE/edit
+
 **Proposed Level of Achievement:**
 
 Project Gemini
@@ -164,7 +168,5 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 https://docs.google.com/spreadsheets/d/1wf6Rqj5oX6-DM4eb08vcTcHm9Ddp1o3Nd647brcG-4U/edit?usp=sharing
 
-**Last update:4/6/2024 any further updates to this readme will be on:**
 
-https://docs.google.com/document/d/1SRgPVN5KKUfDGZsgG2oywxG7FnQ7_LoE/edit
 
