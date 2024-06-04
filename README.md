@@ -1,3 +1,5 @@
+![Alt text](assets/MINDSPACE.png)
+
 **Proposed Level of Achievement:**
 
 Project Gemini
