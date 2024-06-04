@@ -2,7 +2,7 @@
   <img src=assets/MINDSPACE.png>
 </p>
 
-<h1>Last update:4/6/2024 any further updates to this readme will be on:<\h1>
+<h1>Last update:4/6/2024 any further updates to this readme will be on:</h1>h1>
 
 https://docs.google.com/document/d/1SRgPVN5KKUfDGZsgG2oywxG7FnQ7_LoE/edit
 
