@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 
 const MeditationScreen = () => {
@@ -57,13 +57,6 @@ const MeditationScreen = () => {
     "This form uses bowls, gongs, and other instruments to create sound vibrations that help focus the mind and bring it into a more relaxed state."
   ]
 
-  const handleBackButtonPress = async () => {
-    if (sound) {
-      await sound.unloadAsync();
-    }
-    navigation.goBack();
-  };
-
   const handleUserTimeInputChange = (text) => {
     setUserTimeInput(text);
   };
@@ -76,11 +69,21 @@ const MeditationScreen = () => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        if (sound) {
+          sound.unloadAsync();
+        }
+      };
+    }, [sound])
+  );
+
   useEffect(() => {
     let interval;
     if (timerActive && timerSeconds > 0) {
       interval = setInterval(() => {
-        setTimerSeconds(prevSeconds => {
+        setTimerSeconds((prevSeconds) => {
           if (prevSeconds === 1) {
             playSound();
             setTimerActive(false);
@@ -101,7 +104,7 @@ const MeditationScreen = () => {
     if (!isNaN(timeInMinutes)) {
       setTimerSeconds(timeInMinutes * 60);
       setUserTimeInput('');
-      startTimer(); 
+      startTimer();
     }
   };
 
@@ -128,18 +131,18 @@ const MeditationScreen = () => {
       console.error('Invalid track index:', currentTrackIndex);
       return;
     }
-  
+
     const selectedTrack = tracks[currentTrackIndex];
     if (!selectedTrack || !selectedTrack.file) {
       console.error('Invalid or missing track:', selectedTrack);
       return;
     }
-  
+
     try {
       if (sound) {
         await sound.unloadAsync();
       }
-  
+
       const { sound: newSound } = await Audio.Sound.createAsync(selectedTrack.file);
       setSound(newSound);
       await newSound.playAsync();
@@ -178,9 +181,6 @@ const MeditationScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={handleBackButtonPress} style={styles.backButton}>
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleTabPress('Exercises')}
           style={[styles.tabButton, selectedTab === 'Exercises' && styles.activeTab]}
@@ -218,7 +218,7 @@ const MeditationScreen = () => {
               {(timerSeconds % 60).toString().padStart(2, '0')}
             </Text>
             {timerActive && (
-              <           TouchableOpacity onPress={stopTimer} style={styles.setTimerButton}>
+              <TouchableOpacity onPress={stopTimer} style={styles.setTimerButton}>
                 <Text style={styles.setTimerButtonText}>Stop Timer</Text>
               </TouchableOpacity>
             )}
@@ -251,7 +251,6 @@ const MeditationScreen = () => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

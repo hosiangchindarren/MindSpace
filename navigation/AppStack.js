@@ -27,7 +27,6 @@ export const AppStack = () => {
         component={MeditationScreen} 
         options={{
           headerTitleAlign: 'center',
-          headerLeft: () => null,
         }} 
       /> 
       <Stack.Screen 
