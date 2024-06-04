@@ -164,6 +164,6 @@ Potential users could be busy professionals that want to practice mindfulness on
 
 https://docs.google.com/spreadsheets/d/1wf6Rqj5oX6-DM4eb08vcTcHm9Ddp1o3Nd647brcG-4U/edit?usp=sharing
 
-**Further updates will be on**
+**Further updates to the readme will be on**
 
 https://docs.google.com/document/d/1zqDiMKDdVLkQ--qSiFx9gTAI7V7vW-ah/edit?usp=sharing&ouid=101752591831047569829&rtpof=true&sd=true
