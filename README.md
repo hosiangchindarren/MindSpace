@@ -62,8 +62,9 @@ The app’s simplistic and intuitive UI/UX design aligns with mindfulness princi
 <ins>Mood Tracking</ins>
 
 - display 5 faces of varying moods
-- add a prompt of “how you're feeling” after clicking on faces. 
-- include statistics and mood history
+- Add a prompt of “Share your thoughts” after clicking on faces.
+- Include statistics (Graphs by Week, Month and Year) and mood history (Allow to delete previous entries)
+
 
 <ins>Goal Setting</ins>
 
