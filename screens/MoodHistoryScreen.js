@@ -1,14 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { AuthenticatedUserContext } from '../providers/AuthenticatedUserProvider';
 import { FontAwesome } from '@expo/vector-icons';
 
-const MoodHistoryScreen = () => {
+// Mood mapping with emojis
+const moodEmojis = {
+  Happy: '😃',
+  Content: '😊',
+  Neutral: '😐',
+  Sad: '😟',
+  Angry: '😠',
+};
+
+const MoodHistoryScreen = ({ defaultSearchDate = null }) => {
   const { user } = useContext(AuthenticatedUserContext);
   const [moods, setMoods] = useState([]);
-  const [searchDate, setSearchDate] = useState('');
+  const [searchDate, setSearchDate] = useState(defaultSearchDate);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -34,22 +45,50 @@ const MoodHistoryScreen = () => {
 
     return moods.filter((mood) => {
       const moodDate = new Date(mood.createdAt.toDate());
-      const searchDateObj = new Date(searchDate);
       return (
-        moodDate.getDate() === searchDateObj.getDate() &&
-        moodDate.getMonth() === searchDateObj.getMonth() &&
-        moodDate.getFullYear() === searchDateObj.getFullYear()
+        moodDate.getDate() === searchDate.getDate() &&
+        moodDate.getMonth() === searchDate.getMonth() &&
+        moodDate.getFullYear() === searchDate.getFullYear()
       );
     });
   };
 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    setSearchDate(date);
+    hideDatePicker();
+  };
+
+  const handleReset = () => {
+    setSearchDate(null);
+  };
+
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search by date (YYYY-MM-DD)"
-        value={searchDate}
-        onChangeText={setSearchDate}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={showDatePicker} style={styles.dateButton}>
+          <Text style={styles.dateButtonText}>
+            {searchDate ? searchDate.toDateString() : 'Select a date'}
+          </Text>
+        </TouchableOpacity>
+        {searchDate && (
+          <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
+            <Text style={styles.resetButtonText}>Reset</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
       />
       <FlatList
         data={filterMoodsByDate()}
@@ -57,7 +96,7 @@ const MoodHistoryScreen = () => {
         renderItem={({ item }) => (
           <View style={styles.moodItem}>
             <View style={styles.moodInfo}>
-              <Text style={styles.moodText}>{item.mood}</Text>
+              <Text style={styles.moodText}>{`${moodEmojis[item.mood]} ${item.mood}`}</Text>
               <Text style={styles.feelingText}>{item.feeling}</Text>
               <Text style={styles.dateText}>{new Date(item.createdAt.toDate()).toLocaleString()}</Text>
             </View>
@@ -77,12 +116,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#E6E6FA',
     padding: 20,
   },
-  searchInput: {
-    borderWidth: 1,
-    borderColor: '#4B0082',
-    padding: 8,
-    backgroundColor: 'white',
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 20,
+  },
+  dateButton: {
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+    backgroundColor: '#4B0082',
+    alignItems: 'center',
+    flex: 1,
+    marginRight: 10,
+  },
+  dateButtonText: {
+    fontSize: 16,
+    color: 'white',
+  },
+  resetButton: {
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+    backgroundColor: '#4B0082',
+    alignItems: 'center',
+  },
+  resetButtonText: {
+    fontSize: 16,
+    color: 'white',
   },
   moodItem: {
     flexDirection: 'row',
