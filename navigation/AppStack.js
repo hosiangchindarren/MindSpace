@@ -9,6 +9,10 @@ import EditGoalScreen from '../screens/EditGoalScreen';
 import MoodTrackingScreen from '../screens/MoodTrackingScreen';
 import MoodHistoryScreen from '../screens/MoodHistoryScreen';
 import MoodStatisticsScreen from '../screens/MoodStatisticsScreen';
+import ViewEntriesScreen from "../screens/ViewEntriesScreen";
+import EntryDetailScreen from "../screens/EntryDetailScreen";
+import JournalScreen from "../screens/JournalScreen";
+
 
 const Stack = createStackNavigator();
 
@@ -22,6 +26,27 @@ export const AppStack = () => {
           headerTitleAlign: 'center',
         }}  
       />
+      <Stack.Screen 
+        name="Journal" 
+        component={JournalScreen} 
+        options={{
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen 
+        name="ViewEntries" 
+        component={ViewEntriesScreen} 
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      /> 
+      <Stack.Screen 
+        name="EntryDetail" 
+        component={EntryDetailScreen} 
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      /> 
       <Stack.Screen 
         name="Meditation" 
         component={MeditationScreen} 

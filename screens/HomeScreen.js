@@ -9,7 +9,7 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   const handleJournal = () => {
-    console.log("Journal button pressed");
+    navigation.navigate("Journal");
   };
   const handleMoodTracking = () => {
     navigation.navigate("Mood Tracking");
