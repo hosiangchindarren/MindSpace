@@ -8,6 +8,9 @@ export const HomeScreen = ({ navigation }) => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
 
+  const handleForum = () => {
+    navigation.navigate("Forum");
+  };
   const handleJournal = () => {
     navigation.navigate("Journal");
   };
@@ -32,6 +35,9 @@ export const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Image source={require('../assets/MINDSPACE.png')} style={styles.logo}/>
       <View style={styles.buttonContainer}>
+        <View style={styles.buttonRow}>
+          {renderButton("Forum", handleForum, require('../assets/Forum.png'))}
+        </View>
         <View style={styles.buttonRow}>
           {renderButton("Journal", handleJournal, require('../assets/Journal.png'))}
           {renderButton("Mood Tracking", handleMoodTracking, require('../assets/MoodTracking.png'))}

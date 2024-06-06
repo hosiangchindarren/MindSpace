@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet } from "react-native";
 import { Formik } from "formik";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { View, TextInput, Logo, Button, FormErrorMessage } from "../components";
@@ -24,9 +24,13 @@ export const SignupScreen = ({ navigation }) => {
   const handleSignup = async (values) => {
     const { email, password } = values;
 
-    createUserWithEmailAndPassword(auth, email, password).catch((error) =>
-      setErrorState(error.message)
-    );
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        return updateProfile(userCredential.user, {
+          displayName: values.displayName,
+        });
+      })
+      .catch((error) => setErrorState(error.message));
   };
 
   return (
@@ -41,6 +45,7 @@ export const SignupScreen = ({ navigation }) => {
             email: "",
             password: "",
             confirmPassword: "",
+            displayName: "",
           }}
           validationSchema={signupValidationSchema}
           onSubmit={(values) => handleSignup(values)}
@@ -102,6 +107,19 @@ export const SignupScreen = ({ navigation }) => {
               <FormErrorMessage
                 error={errors.confirmPassword}
                 visible={touched.confirmPassword}
+              />
+              <TextInput
+                name="displayName"
+                leftIconName="account"
+                placeholder="Enter display name"
+                autoCapitalize="none"
+                value={values.displayName}
+                onChangeText={handleChange("displayName")}
+                onBlur={handleBlur("displayName")}
+              />
+              <FormErrorMessage
+                error={errors.displayName}
+                visible={touched.displayName}
               />
               {errorState !== "" ? (
                 <FormErrorMessage error={errorState} visible={true} />

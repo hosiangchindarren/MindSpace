@@ -12,7 +12,9 @@ import MoodStatisticsScreen from '../screens/MoodStatisticsScreen';
 import ViewEntriesScreen from "../screens/ViewEntriesScreen";
 import EntryDetailScreen from "../screens/EntryDetailScreen";
 import JournalScreen from "../screens/JournalScreen";
-
+import ForumScreen from "../screens/ForumScreen";
+import AddPostScreen from "../screens/AddPostScreen";
+import PostDetailsScreen from "../screens/PostDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -92,6 +94,27 @@ export const AppStack = () => {
       <Stack.Screen 
         name="Edit Goal" 
         component={EditGoalScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Forum" 
+        component={ForumScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Add Post" 
+        component={AddPostScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Post Details" 
+        component={PostDetailsScreen}
         options={{
           headerTitleAlign: 'center',
         }}  
