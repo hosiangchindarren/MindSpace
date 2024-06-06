@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity } from "react-native";
-import { doc, getDoc, collection, addDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
 
@@ -19,7 +19,7 @@ const PostDetailsScreen = ({ route }) => {
       }
     };
 
-    const q = collection(db, "posts", postId, "comments");
+    const q = query(collection(db, "posts", postId, "comments"), orderBy("createdAt", "asc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const commentsArray = [];
       querySnapshot.forEach((doc) => {
