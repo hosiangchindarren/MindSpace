@@ -144,9 +144,6 @@ const MoodStatisticsScreen = ({ selectedDate = new Date(), isDatePickerVisible =
     return (
       <View style={styles.statsContainer}>
         <Text style={styles.period}>{label}</Text>
-        {getUniqueDates(stats).map((date) => (
-          <Text key={date}>{date}</Text>
-        ))}
         {allMoods.map(({ mood, label }) => (
           <View key={mood} style={styles.statItem}>
             <Text>{label}</Text>
