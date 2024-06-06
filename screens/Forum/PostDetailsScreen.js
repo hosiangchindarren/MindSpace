@@ -51,7 +51,7 @@ const PostDetailsScreen = ({ route }) => {
     <View style={styles.container}>
       <View style={styles.postContainer}>
         <Text style={styles.postTitle}>{post.title}</Text>
-        <Text style={styles.postAuthor}>by {post.displayName}</Text>
+        <Text style={styles.postAuthor}>by {post.displayName} on {new Date(post.createdAt.seconds * 1000).toLocaleString()}</Text>
         <Text style={styles.postContent}>{post.content}</Text>
       </View>
       <FlatList
@@ -59,7 +59,9 @@ const PostDetailsScreen = ({ route }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.commentItem}>
-            <Text style={styles.commentAuthor}>{item.displayName}</Text>
+            <Text style={styles.commentAuthor}>
+              {item.displayName} <Text style={styles.commentDate}>on {new Date(item.createdAt.seconds * 1000).toLocaleString()}</Text>
+            </Text>
             <Text style={styles.commentContent}>{item.content}</Text>
           </View>
         )}
@@ -109,6 +111,11 @@ const styles = StyleSheet.create({
   commentAuthor: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  commentDate: {
+    fontSize: 14,
+    color: "gray",
+    fontWeight: "normal",
   },
   commentContent: {
     fontSize: 14,
