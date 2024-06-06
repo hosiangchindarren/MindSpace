@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../config/firebase";
-import { AuthenticatedUserContext } from "../providers/AuthenticatedUserProvider";
+import { db } from "../../config/firebase";
+import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
 
 const AddPostScreen = ({ navigation }) => {
   const { user } = useContext(AuthenticatedUserContext);

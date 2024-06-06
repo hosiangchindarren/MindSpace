@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { signOut } from "firebase/auth";
-import { Colors, auth } from "../config";
+import { Colors, auth } from "../config/firebase"; // Ensure the correct path
 
 export const HomeScreen = ({ navigation }) => {
   const handleLogout = () => {
@@ -47,11 +47,9 @@ export const HomeScreen = ({ navigation }) => {
           {renderButton("Meditation", handleMeditation, require('../assets/Meditation.png'))}
         </View>
       </View>
-      <View style={styles.signOutButtonWrapper}>
-        <TouchableOpacity style={styles.signOutButton} onPress={handleLogout}>
-          <Text style={styles.signOutButtonText}>Sign Out</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.signOutButton} onPress={handleLogout}>
+        <Text style={styles.signOutButtonText}>Sign Out</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -60,11 +58,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#E6E6FA",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingVertical: 20,
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+    marginBottom: 10,
   },
   buttonContainer: {
     width: '80%',
+    flexGrow: 1,
     justifyContent: "center",
   },
   buttonRow: {
@@ -93,32 +99,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
   },
-  signOutButtonWrapper: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
   signOutButton: {
-    width: "100%",
+    width: '80%',
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 8,
     backgroundColor: "#4B0082",
     padding: 10,
     borderRadius: 8,
+    marginBottom: 20,
   },
   signOutButtonText: {
     fontSize: 20,
-    color: Colors.white,
+    color: "#fff",
     fontWeight: "700",
   },
-  logo: {
-    width: 1000,
-    height: 200,
-    resizeMode: "contain",
-    marginBottom: 20,
-  }
 });
 
 export default HomeScreen;
-
-

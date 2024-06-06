@@ -2,19 +2,20 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "../screens";
-import MeditationScreen from "../screens/MeditationScreen";
-import GoalSettingScreen from "../screens/GoalSettingScreen";
-import AddGoalScreen from "../screens/AddGoalScreen";
-import EditGoalScreen from '../screens/EditGoalScreen';
-import MoodTrackingScreen from '../screens/MoodTrackingScreen';
-import MoodHistoryScreen from '../screens/MoodHistoryScreen';
-import MoodStatisticsScreen from '../screens/MoodStatisticsScreen';
-import ViewEntriesScreen from "../screens/ViewEntriesScreen";
-import EntryDetailScreen from "../screens/EntryDetailScreen";
-import JournalScreen from "../screens/JournalScreen";
-import ForumScreen from "../screens/ForumScreen";
-import AddPostScreen from "../screens/AddPostScreen";
-import PostDetailsScreen from "../screens/PostDetailsScreen";
+import MeditationScreen from "../screens/Meditation/MeditationScreen";
+import GoalSettingScreen from "../screens/GoalSetting/GoalSettingScreen";
+import AddGoalScreen from "../screens/GoalSetting/AddGoalScreen";
+import EditGoalScreen from '../screens/GoalSetting/EditGoalScreen';
+import MoodTrackingScreen from '../screens/MoodTracking/MoodTrackingScreen';
+import MoodHistoryScreen from '../screens/MoodTracking/MoodHistoryScreen';
+import MoodStatisticsScreen from '../screens/MoodTracking/MoodStatisticsScreen';
+import ViewEntriesScreen from "../screens/Journal/ViewEntriesScreen";
+import EditEntryScreen from "../screens/Journal/EditEntryScreen";
+import EntryDetailScreen from "../screens/Journal/EntryDetailScreen";
+import JournalScreen from "../screens/Journal/JournalScreen";
+import ForumScreen from "../screens/Forum/ForumScreen";
+import AddPostScreen from "../screens/Forum/AddPostScreen";
+import PostDetailsScreen from "../screens/Forum/PostDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,13 @@ export const AppStack = () => {
           headerTitleAlign: 'center',
         }}
       />
+      <Stack.Screen 
+        name="EditEntry" 
+        component={EditEntryScreen} 
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      /> 
       <Stack.Screen 
         name="ViewEntries" 
         component={ViewEntriesScreen} 

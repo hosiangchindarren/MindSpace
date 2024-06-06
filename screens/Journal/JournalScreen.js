@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TextInput, Alert, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { db, auth } from '../config/firebase';
+import { db, auth } from '../../config/firebase';
 
 const JournalScreen = ({ navigation }) => {
   const [entry, setEntry] = useState("");
@@ -33,7 +33,7 @@ const JournalScreen = ({ navigation }) => {
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
-        placeholder="Write your thoughts here..."
+        placeholder="What's on your mind?"
         value={entry}
         onChangeText={setEntry}
         multiline
@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    flex: 1,
-    marginHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 8,
-    backgroundColor: "purple",
+    width: '45%',
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#4B0082",
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 20,
   },
   buttonText: {
     color: "#fff",

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db, auth } from "../config/firebase";
+import { db, auth } from "../../config/firebase";
+import { useFocusEffect } from '@react-navigation/native';
 
 const ViewEntriesScreen = ({ navigation }) => {
   const [entries, setEntries] = useState([]);
@@ -9,27 +10,33 @@ const ViewEntriesScreen = ({ navigation }) => {
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchEntries = async () => {
-      try {
-        const q = query(collection(db, 'journalEntries'), where('userId', '==', auth.currentUser.uid));
-        const querySnapshot = await getDocs(q);
-        const entriesList = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          date: doc.data().date.toDate().toLocaleString(), // Convert timestamp to readable date
-        }));
-        setEntries(entriesList);
-        setFilteredEntries(entriesList);
-      } catch (error) {
-        console.error("Error fetching entries: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchEntries = async () => {
+    try {
+      const q = query(collection(db, 'journalEntries'), where('userId', '==', auth.currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const entriesList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().date.toDate().toLocaleString(), // Convert timestamp to readable date
+      }));
+      setEntries(entriesList);
+      setFilteredEntries(entriesList);
+    } catch (error) {
+      console.error("Error fetching entries: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchEntries();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchEntries();
+    }, [])
+  );
 
   const handleSearch = (text) => {
     setSearchDate(text);
@@ -42,7 +49,14 @@ const ViewEntriesScreen = ({ navigation }) => {
   };
 
   const handlePressEntry = (entry) => {
-    navigation.navigate("EntryDetail", { entry });
+    navigation.navigate("EditEntry", { 
+      entry, 
+      onSave: updatedEntry => {
+        const updatedEntries = entries.map(e => e.id === updatedEntry.id ? updatedEntry : e);
+        setEntries(updatedEntries);
+        setFilteredEntries(updatedEntries);
+      }
+    });
   };
 
   const renderItem = ({ item }) => (

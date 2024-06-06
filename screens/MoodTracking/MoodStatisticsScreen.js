@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '../config/firebase';
-import { AuthenticatedUserContext } from '../providers/AuthenticatedUserProvider';
+import { db } from '../../config/firebase';
+import { AuthenticatedUserContext } from '../../providers/AuthenticatedUserProvider';
 import { format } from 'date-fns';
 import { BarChart } from 'react-native-chart-kit';
 

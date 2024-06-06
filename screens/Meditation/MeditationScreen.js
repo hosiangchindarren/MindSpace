@@ -14,9 +14,9 @@ const MeditationScreen = () => {
   const [sound, setSound] = useState(null);
 
   const tracks = [
-    { name: "Moonlight Echoes", file: require('../assets/moonlight-echoes.mp3') },
-    { name: "Once in Paris", file: require('../assets/once-in-paris.mp3') },
-    { name: "Perfect Beauty", file: require('../assets/perfect-beauty.mp3') },
+    { name: "Moonlight Echoes", file: require('../../assets/moonlight-echoes.mp3') },
+    { name: "Once in Paris", file: require('../../assets/once-in-paris.mp3') },
+    { name: "Perfect Beauty", file: require('../../assets/perfect-beauty.mp3') },
   ];
 
   const headers = [
@@ -121,7 +121,7 @@ const MeditationScreen = () => {
 
   const playSound = async () => {
     const { sound } = await Audio.Sound.createAsync(
-      require('../assets/alarm.mp3')
+      require('../../assets/alarm.mp3')
     );
     await sound.playAsync();
   };

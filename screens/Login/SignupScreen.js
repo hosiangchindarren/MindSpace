@@ -4,10 +4,10 @@ import { Formik } from "formik";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { View, TextInput, Logo, Button, FormErrorMessage } from "../components";
-import { Images, Colors, auth } from "../config";
-import { useTogglePasswordVisibility } from "../hooks";
-import { signupValidationSchema } from "../utils";
+import { View, TextInput, Logo, Button, FormErrorMessage } from "../../components";
+import { Images, Colors, auth } from "../../config";
+import { useTogglePasswordVisibility } from "../../hooks";
+import { signupValidationSchema } from "../../utils";
 
 export const SignupScreen = ({ navigation }) => {
   const [errorState, setErrorState] = useState("");

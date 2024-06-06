@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput } from "react-native";
 import { collection, addDoc, onSnapshot, deleteDoc, query, where, doc } from "firebase/firestore";
-import { db } from "../config/firebase";
-import { AuthenticatedUserContext } from "../providers/AuthenticatedUserProvider";
+import { db } from "../../config/firebase";
+import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
 
 const ForumScreen = ({ navigation }) => {
   const { user } = useContext(AuthenticatedUserContext);

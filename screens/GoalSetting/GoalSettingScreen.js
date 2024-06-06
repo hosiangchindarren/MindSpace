@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
 import { collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where } from "firebase/firestore";
-import { db } from "../config/firebase";
-import { AuthenticatedUserContext } from "../providers/AuthenticatedUserProvider";
+import { db } from "../../config/firebase";
+import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useWindowDimensions } from 'react-native';
 
