@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Audio } from 'expo-av';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
 const MeditationScreen = () => {
   const navigation = useNavigation();
@@ -226,25 +227,23 @@ const MeditationScreen = () => {
         </View>
       )}
       <View style={styles.musicDisplay}>
-        {tracks[currentTrackIndex] ? (
+        <View style={styles.currentTrackContainer}>
           <Text style={styles.currentTrackText}>
             Current Track: {tracks[currentTrackIndex] ? tracks[currentTrackIndex].name : 'No track selected'}
           </Text>
-        ) : (
-          <Text style={styles.currentTrackText}>No track selected</Text>
-        )}
+        </View>
         <View style={styles.controlButtons}>
           <TouchableOpacity onPress={skipToPreviousTrack} style={styles.controlButton}>
-            <Text style={styles.controlButtonText}>Previous Track</Text>
+            <FontAwesome name="backward" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity onPress={play} style={styles.controlButton}>
-            <Text style={styles.controlButtonText}>Play</Text>
+            <FontAwesome name="play" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity onPress={pause} style={styles.controlButton}>
-            <Text style={styles.controlButtonText}>Pause</Text>
+            <FontAwesome name="pause" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity onPress={skipToNextTrack} style={styles.controlButton}>
-            <Text style={styles.controlButtonText}>Next Track</Text>
+            <FontAwesome name="forward" size={24} color="white" />
           </TouchableOpacity>
         </View>
       </View>
@@ -259,41 +258,34 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
+    justifyContent: 'space-around',
     backgroundColor: '#4B0082',
-  },
-  backButton: {
-    marginRight: 10,
-  },
-  backButtonText: {
-    color: 'white',
-    fontSize: 16,
+    paddingVertical: 10,
   },
   tabButton: {
     flex: 1,
-    paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#9370DB',
-    borderColor: '#4B0082',
-    borderWidth: 1,
+    paddingVertical: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
   },
   activeTab: {
-    backgroundColor: '#3E006A',
+    borderBottomColor: 'white',
   },
   tabButtonText: {
-    fontSize: 16,
     color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   contentContainer: {
     padding: 10,
   },
   header: {
     backgroundColor: '#9370DB',
-    padding: 10,
+    padding: 15,
     marginVertical: 5,
-    borderRadius: 8,
+    borderRadius: 10,
   },
   headerText: {
     fontSize: 18,
@@ -303,44 +295,64 @@ const styles = StyleSheet.create({
   content: {
     padding: 10,
     backgroundColor: '#E6E6FA',
-    borderRadius: 8,
+    borderRadius: 10,
     marginTop: 5,
   },
   referenceText: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 'bold',
     color: 'purple',
+    marginTop: 10,
+    textAlign: 'center',
   },
   timerInputContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    padding: 20,
   },
   timerInput: {
     borderWidth: 1,
     borderColor: '#4B0082',
-    borderRadius: 8,
-    padding: 8,
-    width: 200,
+    borderRadius: 10,
+    padding: 10,
+    width: '80%',
     textAlign: 'center',
+    marginBottom: 10,
   },
   setTimerButton: {
-    marginTop: 10,
     padding: 10,
     backgroundColor: '#9370DB',
-    borderRadius: 8,
+    borderRadius: 10,
+    marginBottom: 20,
   },
   setTimerButtonText: {
-    fontSize: 16,
     color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   timerDisplay: {
     alignItems: 'center',
-    marginTop: 20,
   },
   timerText: {
     fontSize: 36,
     fontWeight: 'bold',
     color: '#4B0082',
+    marginBottom: 10,
+  },
+  musicDisplay: {
+    backgroundColor: '#4B0082',
+    padding: 20,
+    alignItems: 'center',
+  },
+  currentTrackContainer: {
+    backgroundColor: '#9370DB',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+  },
+  currentTrackText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   controlButtons: {
     flexDirection: 'row',
@@ -349,22 +361,9 @@ const styles = StyleSheet.create({
   },
   controlButton: {
     padding: 10,
-    backgroundColor: '#9370DB',
-    borderRadius: 8,
-  },
-  controlButtonText: {
-    fontSize: 16,
-    color: 'white',
-  },
-  currentTrackText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: 'white',
-  },
-  musicDisplay: {
-    alignItems: 'center',
-    marginTop: 20,
     backgroundColor: '#4B0082',
+    borderRadius: 10,
+    marginHorizontal: 5,
   },
 });
 
