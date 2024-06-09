@@ -11,7 +11,6 @@ import MoodHistoryScreen from '../screens/MoodTracking/MoodHistoryScreen';
 import MoodStatisticsScreen from '../screens/MoodTracking/MoodStatisticsScreen';
 import ViewEntriesScreen from "../screens/Journal/ViewEntriesScreen";
 import EditEntryScreen from "../screens/Journal/EditEntryScreen";
-import EntryDetailScreen from "../screens/Journal/EntryDetailScreen";
 import JournalScreen from "../screens/Journal/JournalScreen";
 import ForumScreen from "../screens/Forum/ForumScreen";
 import AddPostScreen from "../screens/Forum/AddPostScreen";
@@ -49,14 +48,7 @@ export const AppStack = () => {
         options={{
           headerTitleAlign: 'center',
         }}  
-      /> 
-      <Stack.Screen 
-        name="EntryDetail" 
-        component={EntryDetailScreen} 
-        options={{
-          headerTitleAlign: 'center',
-        }}  
-      /> 
+      />   
       <Stack.Screen 
         name="Meditation" 
         component={MeditationScreen} 

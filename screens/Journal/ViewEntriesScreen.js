@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
-import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db, auth } from "../../config/firebase";
 import { useFocusEffect } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const ViewEntriesScreen = ({ navigation }) => {
   const [entries, setEntries] = useState([]);
-  const [searchDate, setSearchDate] = useState("");
+  const [searchDate, setSearchDate] = useState(null);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const fetchEntries = async () => {
     try {
@@ -17,7 +21,7 @@ const ViewEntriesScreen = ({ navigation }) => {
       const entriesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-        date: doc.data().date.toDate().toLocaleString(), // Convert timestamp to readable date
+        date: doc.data().date.toDate().toISOString(), // Convert timestamp to ISO string
       }));
       setEntries(entriesList);
       setFilteredEntries(entriesList);
@@ -38,14 +42,13 @@ const ViewEntriesScreen = ({ navigation }) => {
     }, [])
   );
 
-  const handleSearch = (text) => {
-    setSearchDate(text);
-    if (text) {
-      const filtered = entries.filter(entry => entry.date.includes(text));
-      setFilteredEntries(filtered);
-    } else {
-      setFilteredEntries(entries);
-    }
+  const handleConfirm = (date) => {
+    setDatePickerVisibility(false);
+    setSearchDate(date);
+
+    const formattedDate = moment(date).format('DD-MM-YYYY'); // Format to DD-MM-YYYY
+    const filtered = entries.filter(entry => moment(entry.date).format('DD-MM-YYYY') === formattedDate);
+    setFilteredEntries(filtered);
   };
 
   const handlePressEntry = (entry) => {
@@ -62,7 +65,7 @@ const ViewEntriesScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handlePressEntry(item)}>
       <View style={styles.entry}>
-        <Text style={styles.date}>{item.date}</Text>
+        <Text style={styles.date}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
         <Text style={styles.text} numberOfLines={1}>{item.entry}</Text>
       </View>
     </TouchableOpacity>
@@ -78,17 +81,28 @@ const ViewEntriesScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search by date (e.g., 2024-06-05)"
-        value={searchDate}
-        onChangeText={handleSearch}
+      <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={styles.datePickerButton}>
+        <Text style={styles.datePickerText}>
+          {searchDate ? moment(searchDate).format('DD-MM-YYYY') : 'Select a Date'}
+        </Text>
+      </TouchableOpacity>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={() => setDatePickerVisibility(false)}
       />
       <FlatList
         data={filteredEntries}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      <TouchableOpacity 
+        style={styles.floatingButton} 
+        onPress={() => navigation.navigate('Journal')}
+      >
+        <Icon name="add" size={24} color="#fff" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -99,13 +113,19 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#E6E6FA",
   },
-  searchBar: {
+  datePickerButton: {
     padding: 10,
     marginBottom: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "#4B0082",
     borderRadius: 8,
     borderColor: "#ccc",
     borderWidth: 1,
+    alignItems: 'center',
+  },
+  datePickerText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   entry: {
     padding: 16,
@@ -123,6 +143,18 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: "#000",
+  },
+  floatingButton: {
+    position: 'absolute',
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 16,
+    bottom: 16,
+    backgroundColor: '#4B0082',
+    borderRadius: 28,
+    elevation: 8,
   },
 });
 

@@ -12,7 +12,7 @@ export const HomeScreen = ({ navigation }) => {
     navigation.navigate("Forum");
   };
   const handleJournal = () => {
-    navigation.navigate("Journal");
+    navigation.navigate("ViewEntries");
   };
   const handleMoodTracking = () => {
     navigation.navigate("Mood Tracking");

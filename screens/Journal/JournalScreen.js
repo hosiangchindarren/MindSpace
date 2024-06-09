@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { View, TextInput, Alert, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db, auth } from '../../config/firebase';
@@ -16,6 +16,7 @@ const JournalScreen = ({ navigation }) => {
         });
         Alert.alert("Success", "Your journal entry has been saved!");
         setEntry(""); // Clear the input after saving
+        navigation.navigate("ViewEntries");
       } catch (error) {
         console.error("Error saving entry: ", error);
         Alert.alert("Error", "Failed to save the journal entry.");
@@ -25,9 +26,15 @@ const JournalScreen = ({ navigation }) => {
     }
   };
 
-  const handleViewEntries = () => {
-    navigation.navigate("ViewEntries")
-  };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={handleSave}>
+          <Text style={styles.headerButton}>Save</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, entry]);
 
   return (
     <View style={styles.container}>
@@ -38,14 +45,6 @@ const JournalScreen = ({ navigation }) => {
         onChangeText={setEntry}
         multiline
       />
-      <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button} onPress={handleSave}>
-          <Text style={styles.buttonText}>Save Entry</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleViewEntries}>
-          <Text style={styles.buttonText}>View Entries</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -67,23 +66,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlignVertical: "top",
   },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  button: {
-    width: '45%',
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#4B0082",
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  buttonText: {
-    color: "#fff",
+  headerButton: {
+    color: "#4B0082",
     fontSize: 16,
-    fontWeight: "bold",
+    marginRight: 16,
   },
 });
 
