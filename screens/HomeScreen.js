@@ -1,112 +1,65 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { signOut } from "firebase/auth";
-import { Colors, auth } from "../config/firebase"; // Ensure the correct path
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Image, StyleSheet } from "react-native";
+import ForumScreen from "../screens/Forum/ForumScreen";
+import ViewEntriesScreen from "../screens/Journal/ViewEntriesScreen";
+import MoodTrackingScreen from "../screens/MoodTracking/MoodTrackingScreen";
+import GoalSettingScreen from "../screens/GoalSetting/GoalSettingScreen";
+import MeditationScreen from "../screens/Meditation/MeditationScreen";
 
-export const HomeScreen = ({ navigation }) => {
-  const handleLogout = () => {
-    signOut(auth).catch((error) => console.log("Error logging out: ", error));
-  };
+const Tab = createBottomTabNavigator();
 
-  const handleForum = () => {
-    navigation.navigate("Forum");
-  };
-  const handleJournal = () => {
-    navigation.navigate("ViewEntries");
-  };
-  const handleMoodTracking = () => {
-    navigation.navigate("Mood Tracking");
-  };
-  const handleGoalSetting = () => {
-    navigation.navigate("Goals");
-  };
-  const handleMeditation = () => {
-    navigation.navigate("Meditation"); 
-  };
-
-  const renderButton = (title, onPress, imageSource) => (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Image source={imageSource} style={styles.buttonImage} />
-      <Text style={styles.buttonText}>{title}</Text>
-    </TouchableOpacity>
-  );
-
+const HomeScreen = () => {
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/MINDSPACE.png')} style={styles.logo}/>
-      <View style={styles.buttonContainer}>
-        <View style={styles.buttonRow}>
-          {renderButton("Forum", handleForum, require('../assets/Forum.png'))}
-        </View>
-        <View style={styles.buttonRow}>
-          {renderButton("Journal", handleJournal, require('../assets/Journal.png'))}
-          {renderButton("Mood Tracking", handleMoodTracking, require('../assets/MoodTracking.png'))}
-        </View>
-        <View style={styles.buttonRow}>
-          {renderButton("Goal Setting", handleGoalSetting, require('../assets/GoalSetting.png'))}
-          {renderButton("Meditation", handleMeditation, require('../assets/Meditation.png'))}
-        </View>
-      </View>
-      <TouchableOpacity style={styles.signOutButton} onPress={handleLogout}>
-        <Text style={styles.signOutButtonText}>Sign Out</Text>
-      </TouchableOpacity>
-    </View>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          switch (route.name) {
+            case "Forum":
+              iconName = require("../assets/Forum.png");
+              break;
+            case "View Entries":
+              iconName = require("../assets/Journal.png");
+              break;
+            case "Mood Tracking":
+              iconName = require("../assets/MoodTracking.png");
+              break;
+            case "Goal Setting":
+              iconName = require("../assets/GoalSetting.png");
+              break;
+            case "Meditation":
+              iconName = require("../assets/Meditation.png");
+              break;
+          }
+
+          return <Image source={iconName} style={{ width: size, height: size }} />;
+        },
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <Tab.Screen name="View Entries" component={ViewEntriesScreen} />
+      <Tab.Screen name="Forum" component={ForumScreen} />
+      <Tab.Screen name="Mood Tracking" component={MoodTrackingScreen} />
+      <Tab.Screen name="Goal Setting" component={GoalSettingScreen} />
+      <Tab.Screen name="Meditation" component={MeditationScreen} />
+    </Tab.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#E6E6FA",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 20,
-  },
-  logo: {
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    width: '80%',
-    flexGrow: 1,
-    justifyContent: "center",
-  },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  button: {
-    flex: 1,
-    marginHorizontal: 10,
-    height: 100,
-    width: 100,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#000",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-  },
-  buttonImage: {
-    width: 40,
-    height: 40,
-    marginBottom: 5,
-  },
-  buttonText: {
-    textAlign: "center",
-    color: "#000",
-  },
   signOutButton: {
-    width: '80%',
+    position: 'absolute',
+    bottom: 20,
+    left: '10%',
+    right: '10%',
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#4B0082",
     padding: 10,
     borderRadius: 8,
-    marginBottom: 20,
   },
   signOutButtonText: {
     fontSize: 20,

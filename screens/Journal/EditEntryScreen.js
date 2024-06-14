@@ -1,10 +1,9 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from "../../config/firebase";
 import moment from "moment";
 import { RichEditor, RichToolbar, actions } from "react-native-pell-rich-editor";
-import RNPickerSelect from "react-native-picker-select";
 
 const EditEntryScreen = ({ route, navigation }) => {
   const { entry } = route.params;
@@ -40,10 +39,6 @@ const EditEntryScreen = ({ route, navigation }) => {
   const formattedDate = moment(entry.date).format('DD-MM-YYYY');
   const formattedTime = moment(entry.date).format('HH:mm');
 
-  const handleFontSizeChange = (value) => {
-    richText.current?.commandExecutor?.execCommand('fontSize', false, value);
-  };
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -71,22 +66,6 @@ const EditEntryScreen = ({ route, navigation }) => {
               actions.insertBulletsList,
             ]}
             style={styles.richTextToolbar}
-          />
-          <RNPickerSelect
-            onValueChange={(value) => {
-              richText.current?.insertHTML(`<span style="font-size: ${value}px;">`);
-            }}
-            items={[
-              { label: "8", value: "8" },
-              { label: "10", value: "10" },
-              { label: "12", value: "12" },
-              { label: "14", value: "14" },
-              { label: "18", value: "18" },
-              { label: "24", value: "24" },
-              { label: "30", value: "30" },
-            ]}
-            style={pickerSelectStyles}
-            placeholder={{ label: "Font Size", value: null }}
           />
         </View>
       )}
@@ -138,23 +117,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#4B0082",
     padding: 8,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    color: "white",
-    padding: 10,
-    backgroundColor: "#4B0082",
-    borderRadius: 5,
-    marginLeft: 8,
-  },
-  inputAndroid: {
-    color: "white",
-    padding: 10,
-    backgroundColor: "#4B0082",
-    borderRadius: 5,
-    marginLeft: 8,
   },
 });
 

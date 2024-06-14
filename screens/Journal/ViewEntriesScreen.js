@@ -98,8 +98,12 @@ const ViewEntriesScreen = ({ navigation }) => {
         keyExtractor={item => item.id}
       />
       <TouchableOpacity 
-        style={styles.floatingButton} 
-        onPress={() => navigation.navigate('Journal')}
+        style={styles.floatingButton}
+        onPress={() => {
+          console.log('Navigating to JournalScreen with current entries:', entries);
+          console.log('Search date:', searchDate);
+          navigation.navigate('Journal');
+        }}
       >
         <Icon name="add" size={24} color="#fff" />
       </TouchableOpacity>

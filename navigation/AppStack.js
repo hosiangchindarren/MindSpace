@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { HomeScreen } from "../screens";
+import HomeScreen from "../screens/HomeScreen";
 import MeditationScreen from "../screens/Meditation/MeditationScreen";
 import GoalSettingScreen from "../screens/GoalSetting/GoalSettingScreen";
 import AddGoalScreen from "../screens/GoalSetting/AddGoalScreen";
@@ -24,9 +24,9 @@ export const AppStack = () => {
       <Stack.Screen 
         name="Home" 
         component={HomeScreen}
-        options={{
-          headerTitleAlign: 'center',
-        }}  
+        options={{ 
+          headerShown: false, // Hide the header for Home screen
+        }}
       />
       <Stack.Screen 
         name="Journal" 
