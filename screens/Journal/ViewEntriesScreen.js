@@ -52,7 +52,7 @@ const ViewEntriesScreen = ({ navigation }) => {
   };
 
   const handlePressEntry = (entry) => {
-    navigation.navigate("EditEntry", { 
+    navigation.navigate("Edit Entry", { 
       entry, 
       onSave: updatedEntry => {
         const updatedEntries = entries.map(e => e.id === updatedEntry.id ? updatedEntry : e);
@@ -102,7 +102,7 @@ const ViewEntriesScreen = ({ navigation }) => {
         onPress={() => {
           console.log('Navigating to JournalScreen with current entries:', entries);
           console.log('Search date:', searchDate);
-          navigation.navigate('Journal');
+          navigation.navigate('Add Entry');
         }}
       >
         <Icon name="add" size={24} color="#fff" />

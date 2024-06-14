@@ -29,21 +29,21 @@ export const AppStack = () => {
         }}
       />
       <Stack.Screen 
-        name="Journal" 
+        name="Add Entry" 
         component={JournalScreen} 
         options={{
           headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen 
-        name="EditEntry" 
+        name="Edit Entry" 
         component={EditEntryScreen} 
         options={{
           headerTitleAlign: 'center',
         }}  
       /> 
       <Stack.Screen 
-        name="ViewEntries" 
+        name="Journal" 
         component={ViewEntriesScreen} 
         options={{
           headerTitleAlign: 'center',
