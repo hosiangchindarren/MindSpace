@@ -20,7 +20,7 @@ const HomeScreen = () => {
             case "Forum":
               iconName = require("../assets/Forum.png");
               break;
-            case "View Entries":
+            case "Journal":
               iconName = require("../assets/Journal.png");
               break;
             case "Mood Tracking":
@@ -40,7 +40,7 @@ const HomeScreen = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="View Entries" component={ViewEntriesScreen} />
+      <Tab.Screen name="Journal" component={ViewEntriesScreen} />
       <Tab.Screen name="Forum" component={ForumScreen} />
       <Tab.Screen name="Mood Tracking" component={MoodTrackingScreen} />
       <Tab.Screen name="Goal Setting" component={GoalSettingScreen} />

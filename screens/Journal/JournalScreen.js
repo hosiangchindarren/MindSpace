@@ -30,7 +30,7 @@ const JournalScreen = ({ navigation }) => {
         });
         Alert.alert("Success", "Your journal entry has been saved!");
         setEntry(""); // Clear the input after saving
-        navigation.navigate("ViewEntries");
+        navigation.goBack();
       } catch (error) {
         console.error("Error saving entry: ", error);
         Alert.alert("Error", "Failed to save the journal entry.");
