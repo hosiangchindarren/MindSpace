@@ -5,6 +5,7 @@ import { db } from "../../config/firebase";
 import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useWindowDimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import Ionicons
 
 const GoalSettingScreen = ({ navigation }) => {
   const { user } = useContext(AuthenticatedUserContext);
@@ -100,8 +101,11 @@ const GoalSettingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Add Goal')}>
-        <Text style={styles.addButtonText}>ADD GOAL</Text>
+      <TouchableOpacity 
+        style={styles.floatingButton}
+        onPress={() => navigation.navigate('Add Goal')}
+      >
+        <Icon name="add" size={24} color="#fff" />
       </TouchableOpacity>
       <TabView
         navigationState={{ index, routes }}
@@ -127,16 +131,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#E6E6FA',
     padding: 20,
   },
-  addButton: {
-    marginVertical: 10,
+  floatingButton: {
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    width: 60,
+    height: 60,
     backgroundColor: '#4B0082',
-    padding: 10,
-    borderRadius: 5,
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    textAlign: "center",
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1, 
   },
   goalItem: {
     flexDirection: "row",

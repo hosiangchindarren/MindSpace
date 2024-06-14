@@ -36,7 +36,7 @@ const HomeScreen = () => {
 
           return <Image source={iconName} style={{ width: size, height: size }} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: "#4B0082",
         tabBarInactiveTintColor: "gray",
       })}
     >
