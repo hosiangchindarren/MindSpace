@@ -1,84 +1,296 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import moment from "moment";
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db, auth } from "../../config/firebase";
 import FireEffect from '../../components/FireEffect';
+import { useFocusEffect } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import debounce from 'lodash.debounce';
 
-const CalendarScreen = () => {
+const CalendarScreen = ({ navigation }) => {
   const [entries, setEntries] = useState([]);
+  const [moods, setMoods] = useState([]);
   const [markedDates, setMarkedDates] = useState({});
   const [streak, setStreak] = useState(0);
+  const [moodStreak, setMoodStreak] = useState(0);
+  const [events, setEvents] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const fetchEntries = async () => {
+    try {
+      const q = query(collection(db, 'journalEntries'), where('userId', '==', auth.currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const entriesList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().date.toDate().toISOString(),
+      }));
+      setEntries(entriesList);
+    } catch (error) {
+      console.error("Error fetching entries: ", error);
+    }
+  };
+
+  const fetchMoods = async () => {
+    try {
+      const q = query(collection(db, 'moods'), where('userId', '==', auth.currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const moodsList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().createdAt.toDate().toISOString(),
+      }));
+      setMoods(moodsList);
+    } catch (error) {
+      console.error("Error fetching moods: ", error);
+    }
+  };
+
+  const fetchEvents = async () => {
+    try {
+      const q = query(collection(db, 'events'), where('userId', '==', auth.currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const eventsList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().date.toDate().toISOString(),
+      }));
+      setEvents(eventsList);
+      setFilteredEvents(eventsList);
+
+      const marked = entries.reduce((acc, entry) => {
+        const date = moment(entry.date).format('YYYY-MM-DD');
+        if (!acc[date]) {
+          acc[date] = { dots: [] };
+        }
+        if (!acc[date].dots.some(dot => dot.key.startsWith('entry'))) {
+          acc[date].dots.push({ key: `entry-${entry.id}`, color: 'red', selectedDotColor: 'red' });
+        }
+        return acc;
+      }, {});
+
+      moods.forEach(mood => {
+        const date = moment(mood.date).format('YYYY-MM-DD');
+        if (!marked[date]) {
+          marked[date] = { dots: [] };
+        }
+        if (!marked[date].dots.some(dot => dot.key.startsWith('mood'))) {
+          marked[date].dots.push({ key: `mood-${mood.id}`, color: 'blue', selectedDotColor: 'blue' });
+        }
+      });
+
+      eventsList.forEach(event => {
+        const date = moment(event.date).format('YYYY-MM-DD');
+        if (!marked[date]) {
+          marked[date] = { dots: [] };
+        }
+        marked[date].dots.push({ key: `event-${event.id}`, color: 'green', selectedDotColor: 'green' });
+      });
+
+      setMarkedDates((prevMarkedDates) => ({
+        ...prevMarkedDates,
+        ...marked,
+      }));
+    } catch (error) {
+      console.error("Error fetching events: ", error);
+    }
+  };
+
+  const deleteEvent = async (eventId) => {
+    try {
+      await deleteDoc(doc(db, 'events', eventId));
+      setEvents(events.filter(event => event.id !== eventId));
+      setFilteredEvents(filteredEvents.filter(event => event.id !== eventId));
+    } catch (error) {
+      console.error("Error deleting event: ", error);
+    }
+  };
+
+  const calculateStreaks = (entries, type) => {
+    let streaks = 0;
+    let currentStreak = 0;
+    const today = moment().startOf('day');
+    const dates = entries.map(entry => moment(entry.date).startOf('day')).sort((a, b) => a.diff(b));
+    
+    if (dates.length > 0) {
+      if (dates[dates.length - 1].isSame(today, 'day')) {
+        currentStreak = 1;
+        streaks = 1;
+
+        for (let i = dates.length - 1; i > 0; i--) {
+          if (dates[i].diff(dates[i - 1], 'days') === 1) {
+            currentStreak++;
+            if (currentStreak > streaks) {
+              streaks = currentStreak;
+            }
+          } else {
+            break;
+          }
+        }
+      }
+    }
+
+    if (type === 'journal') {
+      setStreak(streaks);
+    } else {
+      setMoodStreak(streaks);
+    }
+  };
+
+  const filterEvents = debounce((query) => {
+    if (query) {
+      const filtered = events.filter(event => event.title.toLowerCase().includes(query.toLowerCase()));
+      setFilteredEvents(filtered);
+    } else {
+      setFilteredEvents(events);
+    }
+    setSearchQuery(query);
+  }, 300);
+
+  const handleConfirm = (date) => {
+    filterEvents(moment(date).format('YYYY-MM-DD'));
+    setDatePickerVisibility(false);
+  };
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
 
   useEffect(() => {
-    const fetchEntries = async () => {
-      try {
-        const q = query(collection(db, 'journalEntries'), where('userId', '==', auth.currentUser.uid));
-        const querySnapshot = await getDocs(q);
-        const entriesList = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          date: doc.data().date.toDate().toISOString(),
-        }));
-        setEntries(entriesList);
-      } catch (error) {
-        console.error("Error fetching entries: ", error);
-      }
-    };
     fetchEntries();
+    fetchMoods();
   }, []);
 
   useEffect(() => {
-    const marked = entries.reduce((acc, entry) => {
-      const date = moment(entry.date).format('YYYY-MM-DD');
-      acc[date] = {
-        customStyles: {
-          container: { backgroundColor: 'transparent' },
-          text: {
-            color: 'white',
-            fontWeight: 'bold',
-            backgroundColor: 'red',
-            padding: 5,
-            borderRadius: 5,
-          },
-        },
-      };
-      return acc;
-    }, {});
-    setMarkedDates(marked);
+    fetchEvents();
+  }, [entries, moods]);
 
-    const calculateStreaks = (entries) => {
-      let streaks = 1;
-      let currentStreak = 1;
-      const dates = entries.map(entry => moment(entry.date)).sort((a, b) => a.diff(b));
-      for (let i = 1; i < dates.length; i++) {
-        if (dates[i].diff(dates[i - 1], 'days') === 1) {
-          currentStreak++;
-          if (currentStreak > streaks) {
-            streaks = currentStreak;
-          }
-        } else {
-          currentStreak = 1;
-        }
-      }
-      setStreak(streaks);
-    };
-    calculateStreaks(entries);
-  }, [entries]);
+  useEffect(() => {
+    calculateStreaks(entries, 'journal');
+    calculateStreaks(moods, 'mood');
+  }, [entries, moods]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchEntries();
+      fetchMoods();
+      fetchEvents();
+    }, [])
+  );
+
+  const handleDayPress = (day) => {
+    navigation.navigate('Add Event', { date: day.dateString });
+  };
 
   return (
-    <View style={styles.container}>
-      <Calendar
-        markedDates={markedDates}
-        markingType={'custom'}
-      />
-      {streak >= 1 && (
-        <FireEffect>
-          <Text style={styles.streakText}>{`${streak}-Day Journaling Streak! Keep it up!`}</Text>
-        </FireEffect>
+    <FlatList
+      style={styles.container}
+      ListHeaderComponent={() => (
+        <>
+          <Calendar
+            markedDates={markedDates}
+            markingType={'multi-dot'}
+            onDayPress={handleDayPress}
+          />
+          <View style={styles.legendContainer}>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: 'red' }]} />
+              <Text style={styles.legendText}>Journal Entry</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: 'blue' }]} />
+              <Text style={styles.legendText}>Mood Entry</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: 'green' }]} />
+              <Text style={styles.legendText}>Event</Text>
+            </View>
+          </View>
+          <View style={styles.streakContainer}>
+            <FireEffect source={require('../../assets/JournalStreak.png')}>
+              <Text style={styles.streakText}>
+                {streak > 0 ? (
+                  <>
+                    {`${streak}-Day`}
+                    {"\n"}
+                    Journaling Streak
+                    {"\n"}
+                    Keep it up!
+                  </>
+                ) : (
+                  <>
+                    Do a journal entry
+                    {"\n"}
+                    to start your
+                    {"\n"}
+                    streak!
+                  </>
+                )}
+              </Text>
+            </FireEffect>
+            <FireEffect source={require('../../assets/MoodStreak.png')}>
+              <Text style={styles.streakText}>
+                {moodStreak > 0 ? (
+                  <>
+                    {`${moodStreak}-Day`}
+                    {"\n"}
+                    Mood Tracking Streak
+                    {"\n"}
+                    Keep it up!
+                  </>
+                ) : (
+                  <>
+                    Do a mood entry
+                    {"\n"}
+                    to start your
+                    {"\n"}
+                    streak!
+                  </>
+                )}
+              </Text>
+            </FireEffect>
+          </View>
+          <Text style={styles.upcomingEventsTitle}>Upcoming Events</Text>
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search events by title"
+              value={searchQuery}
+              onChangeText={filterEvents}
+            />
+            <TouchableOpacity onPress={showDatePicker}>
+              <Ionicons name="calendar" size={24} color="black" />
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
+          </View>
+        </>
       )}
-    </View>
+      data={filteredEvents.filter(event => moment(event.date).isSameOrAfter(moment(), 'day'))}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View style={styles.eventItem}>
+          <Text style={styles.eventText}>{item.title}</Text>
+          <Text style={styles.eventDate}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
+          <TouchableOpacity onPress={() => deleteEvent(item.id)}>
+            <Ionicons name="trash" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      )}
+    />
   );
 };
 
@@ -87,12 +299,78 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E6E6FA",
   },
-  streakText: {
-    fontSize: 13,
-    color: "#4B0082",
-    textAlign: "center",
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  legendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 5,
+  },
+  legendText: {
+    fontSize: 14,
+  },
+  streakContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 5,
+  },
+  streakText: {
+    fontSize: 16,
+    color: "white",
+    textAlign: "center",
+    padding: 5,
+    borderRadius: 5,
+  },
+  streakMessage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  upcomingEventsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  eventItem: {
+    backgroundColor: '#fff',
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  eventText: {
+    fontSize: 16,
+  },
+  eventDate: {
+    fontSize: 12,
+    color: '#666',
   },
 });
 
 export default CalendarScreen;
+
