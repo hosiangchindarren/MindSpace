@@ -7,6 +7,7 @@ import MoodTrackingScreen from "../screens/MoodTracking/MoodTrackingScreen";
 import GoalSettingScreen from "../screens/GoalSetting/GoalSettingScreen";
 import MeditationScreen from "../screens/Meditation/MeditationScreen";
 import SignOutScreen from "../screens/SignOutScreen";
+import CalendarScreen from "../screens/DynamicCalendar/CalendarScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,7 +35,10 @@ const HomeScreen = () => {
               iconName = require("../assets/Meditation.png");
               break;
             case "Sign Out":
-              iconName = require("../assets/SignOut.png"); // You need to have a sign-out icon
+              iconName = require("../assets/SignOut.png"); 
+              break;
+            case "Dynamic Calendar":
+              iconName = require("../assets/calendar.png"); 
               break;
           }
 
@@ -49,6 +53,7 @@ const HomeScreen = () => {
       <Tab.Screen name="Mood Tracking" component={MoodTrackingScreen} />
       <Tab.Screen name="Goal Setting" component={GoalSettingScreen} />
       <Tab.Screen name="Meditation" component={MeditationScreen} />
+      <Tab.Screen name="Dynamic Calendar" component={CalendarScreen} />
       <Tab.Screen name="Sign Out" component={SignOutScreen} />
     </Tab.Navigator>
   );
