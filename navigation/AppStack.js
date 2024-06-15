@@ -15,6 +15,7 @@ import JournalScreen from "../screens/Journal/JournalScreen";
 import ForumScreen from "../screens/Forum/ForumScreen";
 import AddPostScreen from "../screens/Forum/AddPostScreen";
 import PostDetailsScreen from "../screens/Forum/PostDetailsScreen";
+import AddEventScreen from "../screens/DynamicCalendar/AddEventScreen";
 
 const Stack = createStackNavigator();
 
@@ -115,6 +116,13 @@ export const AppStack = () => {
       <Stack.Screen 
         name="Post Details" 
         component={PostDetailsScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}  
+      />
+      <Stack.Screen 
+        name="Add Event" 
+        component={AddEventScreen}
         options={{
           headerTitleAlign: 'center',
         }}  
