@@ -6,6 +6,7 @@ import ViewEntriesScreen from "../screens/Journal/ViewEntriesScreen";
 import MoodTrackingScreen from "../screens/MoodTracking/MoodTrackingScreen";
 import GoalSettingScreen from "../screens/GoalSetting/GoalSettingScreen";
 import MeditationScreen from "../screens/Meditation/MeditationScreen";
+import SignOutScreen from "../screens/SignOutScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +33,9 @@ const HomeScreen = () => {
             case "Meditation":
               iconName = require("../assets/Meditation.png");
               break;
+            case "Sign Out":
+              iconName = require("../assets/SignOut.png"); // You need to have a sign-out icon
+              break;
           }
 
           return <Image source={iconName} style={{ width: size, height: size }} />;
@@ -45,6 +49,7 @@ const HomeScreen = () => {
       <Tab.Screen name="Mood Tracking" component={MoodTrackingScreen} />
       <Tab.Screen name="Goal Setting" component={GoalSettingScreen} />
       <Tab.Screen name="Meditation" component={MeditationScreen} />
+      <Tab.Screen name="Sign Out" component={SignOutScreen} />
     </Tab.Navigator>
   );
 };
