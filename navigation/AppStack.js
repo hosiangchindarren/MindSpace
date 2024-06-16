@@ -15,7 +15,7 @@ import JournalScreen from "../screens/Journal/JournalScreen";
 import ForumScreen from "../screens/Forum/ForumScreen";
 import AddPostScreen from "../screens/Forum/AddPostScreen";
 import PostDetailsScreen from "../screens/Forum/PostDetailsScreen";
-import AddEventScreen from "../screens/DynamicCalendar/AddEventScreen";
+import AddReminderScreen from "../screens/DynamicCalendar/AddReminderScreen";
 
 const Stack = createStackNavigator();
 
@@ -121,8 +121,8 @@ export const AppStack = () => {
         }}  
       />
       <Stack.Screen 
-        name="Add Event" 
-        component={AddEventScreen}
+        name="Add Reminder" 
+        component={AddReminderScreen}
         options={{
           headerTitleAlign: 'center',
         }}  
