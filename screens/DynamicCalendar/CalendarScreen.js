@@ -16,9 +16,9 @@ const CalendarScreen = ({ navigation }) => {
   const [markedDates, setMarkedDates] = useState({});
   const [streak, setStreak] = useState(0);
   const [moodStreak, setMoodStreak] = useState(0);
-  const [events, setEvents] = useState([]);
+  const [reminders, setReminders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredReminders, setFilteredReminders] = useState([]);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const fetchEntries = async () => {
@@ -51,17 +51,17 @@ const CalendarScreen = ({ navigation }) => {
     }
   };
 
-  const fetchEvents = async () => {
+  const fetchReminders = async () => {
     try {
-      const q = query(collection(db, 'events'), where('userId', '==', auth.currentUser.uid));
+      const q = query(collection(db, 'reminders'), where('userId', '==', auth.currentUser.uid));
       const querySnapshot = await getDocs(q);
-      const eventsList = querySnapshot.docs.map(doc => ({
+      const remindersList = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
         date: doc.data().date.toDate().toISOString(),
       }));
-      setEvents(eventsList);
-      setFilteredEvents(eventsList);
+      setReminders(remindersList);
+      setFilteredReminders(remindersList);
 
       const marked = entries.reduce((acc, entry) => {
         const date = moment(entry.date).format('YYYY-MM-DD');
@@ -84,12 +84,12 @@ const CalendarScreen = ({ navigation }) => {
         }
       });
 
-      eventsList.forEach(event => {
-        const date = moment(event.date).format('YYYY-MM-DD');
+      remindersList.forEach(reminder => {
+        const date = moment(reminder.date).format('YYYY-MM-DD');
         if (!marked[date]) {
           marked[date] = { dots: [] };
         }
-        marked[date].dots.push({ key: `event-${event.id}`, color: 'green', selectedDotColor: 'green' });
+        marked[date].dots.push({ key: `reminder-${reminder.id}`, color: 'green', selectedDotColor: 'green' });
       });
 
       setMarkedDates((prevMarkedDates) => ({
@@ -97,17 +97,17 @@ const CalendarScreen = ({ navigation }) => {
         ...marked,
       }));
     } catch (error) {
-      console.error("Error fetching events: ", error);
+      console.error("Error fetching reminders: ", error);
     }
   };
 
-  const deleteEvent = async (eventId) => {
+  const deleteReminder = async (reminderId) => {
     try {
-      await deleteDoc(doc(db, 'events', eventId));
-      setEvents(events.filter(event => event.id !== eventId));
-      setFilteredEvents(filteredEvents.filter(event => event.id !== eventId));
+      await deleteDoc(doc(db, 'reminders', reminderId));
+      setReminders(reminders.filter(reminder => reminder.id !== reminderId));
+      setFilteredReminders(filteredReminders.filter(reminder => reminder.id !== reminderId));
     } catch (error) {
-      console.error("Error deleting event: ", error);
+      console.error("Error deleting reminder: ", error);
     }
   };
 
@@ -142,18 +142,19 @@ const CalendarScreen = ({ navigation }) => {
     }
   };
 
-  const filterEvents = debounce((query) => {
+  const filterReminders = debounce((query) => {
     if (query) {
-      const filtered = events.filter(event => event.title.toLowerCase().includes(query.toLowerCase()));
-      setFilteredEvents(filtered);
+      const filtered = reminders.filter(reminder => reminder.title.toLowerCase().includes(query.toLowerCase()));
+      setFilteredReminders(filtered);
     } else {
-      setFilteredEvents(events);
+      setFilteredReminders(reminders);
     }
     setSearchQuery(query);
   }, 300);
 
   const handleConfirm = (date) => {
-    filterEvents(moment(date).format('YYYY-MM-DD'));
+    const filtered = reminders.filter(reminder => moment(reminder.date).isSame(date, 'day'));
+    setFilteredReminders(filtered);
     setDatePickerVisibility(false);
   };
 
@@ -171,7 +172,7 @@ const CalendarScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    fetchEvents();
+    fetchReminders();
   }, [entries, moods]);
 
   useEffect(() => {
@@ -183,12 +184,12 @@ const CalendarScreen = ({ navigation }) => {
     useCallback(() => {
       fetchEntries();
       fetchMoods();
-      fetchEvents();
+      fetchReminders();
     }, [])
   );
 
   const handleDayPress = (day) => {
-    navigation.navigate('Add Event', { date: day.dateString });
+    navigation.navigate('Add Reminder', { date: day.dateString });
   };
 
   return (
@@ -212,7 +213,7 @@ const CalendarScreen = ({ navigation }) => {
             </View>
             <View style={styles.legendItem}>
               <View style={[styles.legendDot, { backgroundColor: 'green' }]} />
-              <Text style={styles.legendText}>Event</Text>
+              <Text style={styles.legendText}>Reminder</Text>
             </View>
           </View>
           <View style={styles.streakContainer}>
@@ -259,16 +260,16 @@ const CalendarScreen = ({ navigation }) => {
               </Text>
             </FireEffect>
           </View>
-          <Text style={styles.upcomingEventsTitle}>Upcoming Events</Text>
+          <Text style={styles.upcomingRemindersTitle}>Upcoming Reminders</Text>
           <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Search events by title"
+              placeholder="Search reminders by title"
               value={searchQuery}
-              onChangeText={filterEvents}
+              onChangeText={filterReminders}
             />
             <TouchableOpacity onPress={showDatePicker}>
-              <Ionicons name="calendar" size={24} color="black" />
+              <Ionicons name="calendar" size={24} color="#4B0082" />
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
@@ -279,13 +280,13 @@ const CalendarScreen = ({ navigation }) => {
           </View>
         </>
       )}
-      data={filteredEvents.filter(event => moment(event.date).isSameOrAfter(moment(), 'day'))}
+      data={filteredReminders.filter(reminder => moment(reminder.date).isSameOrAfter(moment(), 'day'))}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <View style={styles.eventItem}>
-          <Text style={styles.eventText}>{item.title}</Text>
-          <Text style={styles.eventDate}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
-          <TouchableOpacity onPress={() => deleteEvent(item.id)}>
+        <View style={styles.reminderItem}>
+          <Text style={styles.reminderText}>{item.title}</Text>
+          <Text style={styles.reminderDate}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
+          <TouchableOpacity onPress={() => deleteReminder(item.id)}>
             <Ionicons name="trash" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -337,24 +338,25 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   streakText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "white",
     textAlign: "center",
     padding: 5,
     borderRadius: 5,
+    fontWeight: "bold",
   },
   streakMessage: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  upcomingEventsTitle: {
+  upcomingRemindersTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
   },
-  eventItem: {
+  reminderItem: {
     backgroundColor: '#fff',
     padding: 10,
     marginVertical: 5,
@@ -363,10 +365,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  eventText: {
+  reminderText: {
     fontSize: 16,
   },
-  eventDate: {
+  reminderDate: {
     fontSize: 12,
     color: '#666',
   },

@@ -6,47 +6,47 @@ import { db, auth } from "../../config/firebase";
 import moment from "moment";
 import { Ionicons } from '@expo/vector-icons';
 
-const AddEventScreen = ({ route, navigation }) => {
+const AddReminderScreen = ({ route, navigation }) => {
   const { date } = route.params;
-  const [eventTitle, setEventTitle] = useState('');
-  const [eventTime, setEventTime] = useState(new Date(date));
+  const [reminderTitle, setReminderTitle] = useState('');
+  const [reminderTime, setReminderTime] = useState(new Date(date));
   const [showTimePicker, setShowTimePicker] = useState(false);
 
-  const addEvent = async () => {
-    if (eventTitle.trim()) {
+  const addReminder = async () => {
+    if (reminderTitle.trim()) {
       try {
-        const eventDateTime = new Date(date);
-        eventDateTime.setHours(eventTime.getHours());
-        eventDateTime.setMinutes(eventTime.getMinutes());
+        const reminderDateTime = new Date(date);
+        reminderDateTime.setHours(reminderTime.getHours());
+        reminderDateTime.setMinutes(reminderTime.getMinutes());
 
-        const newEvent = {
-          title: eventTitle,
-          date: Timestamp.fromDate(eventDateTime),
+        const newReminder = {
+          title: reminderTitle,
+          date: Timestamp.fromDate(reminderDateTime),
           userId: auth.currentUser.uid,
         };
 
-        await addDoc(collection(db, 'events'), newEvent);
-        Alert.alert("Success", "Event added successfully!");
-        setEventTitle('');
+        await addDoc(collection(db, 'reminders'), newReminder);
+        Alert.alert("Success", "Reminder added successfully!");
+        setReminderTitle('');
         navigation.goBack();
       } catch (error) {
-        console.error("Error adding event: ", error);
-        Alert.alert("Error", "Failed to add event.");
+        console.error("Error adding reminder: ", error);
+        Alert.alert("Error", "Failed to add reminder.");
       }
     } else {
-      Alert.alert("Error", "Event title cannot be empty.");
+      Alert.alert("Error", "Reminder title cannot be empty.");
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Selected Date: {moment(date).format('DD-MM-YYYY')}</Text>
-      <Text style={styles.label}>Selected Time: {moment(eventTime).format('HH:mm')}</Text>
+      <Text style={styles.label}>Selected Time: {moment(reminderTime).format('HH:mm')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Event Title"
-        value={eventTitle}
-        onChangeText={setEventTitle}
+        placeholder="Reminder Title"
+        value={reminderTitle}
+        onChangeText={setReminderTitle}
       />
       <TouchableOpacity onPress={() => setShowTimePicker(true)} style={styles.timeButton}>
         <Ionicons name="time-outline" size={24} color="white" />
@@ -54,19 +54,19 @@ const AddEventScreen = ({ route, navigation }) => {
       </TouchableOpacity>
       {showTimePicker && (
         <DateTimePicker
-          value={eventTime}
+          value={reminderTime}
           mode="time"
           display="default"
           onChange={(event, selectedTime) => {
             setShowTimePicker(false);
             if (selectedTime) {
-              setEventTime(selectedTime);
+              setReminderTime(selectedTime);
             }
           }}
         />
       )}
-      <TouchableOpacity onPress={addEvent} style={styles.addButton}>
-        <Text style={styles.addButtonText}>Add Event</Text>
+      <TouchableOpacity onPress={addReminder} style={styles.addButton}>
+        <Text style={styles.addButtonText}>Add Reminder</Text>
       </TouchableOpacity>
     </View>
   );
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddEventScreen;
+export default AddReminderScreen;
