@@ -116,7 +116,7 @@ const CalendarScreen = ({ navigation }) => {
     let currentStreak = 0;
     const today = moment().startOf('day');
     const dates = entries.map(entry => moment(entry.date).startOf('day')).sort((a, b) => a.diff(b));
-    
+
     if (dates.length > 0) {
       if (dates[dates.length - 1].isSame(today, 'day')) {
         currentStreak = 1;
@@ -283,13 +283,15 @@ const CalendarScreen = ({ navigation }) => {
       data={filteredReminders.filter(reminder => moment(reminder.date).isSameOrAfter(moment(), 'day'))}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <View style={styles.reminderItem}>
-          <Text style={styles.reminderText}>{item.title}</Text>
-          <Text style={styles.reminderDate}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
-          <TouchableOpacity onPress={() => deleteReminder(item.id)}>
-            <Ionicons name="trash" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Edit Reminder', { reminderId: item.id })}>
+          <View style={styles.reminderItem}>
+            <Text style={styles.reminderText}>{item.title}</Text>
+            <Text style={styles.reminderDate}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
+            <TouchableOpacity onPress={() => deleteReminder(item.id)}>
+              <Ionicons name="trash" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
       )}
     />
   );
