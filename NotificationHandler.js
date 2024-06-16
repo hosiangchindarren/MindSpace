@@ -43,6 +43,10 @@ export async function scheduleDailyNotification() {
     content: {
       title: "Daily Affirmation",
       body: randomAffirmation,
+      android: {
+        icon: './assets/notification-icon.png',
+        color: 'white', 
+      },
     },
     trigger: {
       hour: 11,

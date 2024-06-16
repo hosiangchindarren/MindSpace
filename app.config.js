@@ -21,6 +21,16 @@ export default {
     ios: {
       supportsTablet: true,
     },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/adaptive-icon.png",
+        backgroundColor: "white",
+      },
+    },
+    notification: {
+      icon: "./assets/notification-icon.png",
+      color: "white", 
+    },
     extra: {
       apiKey: process.env.API_KEY,
       authDomain: process.env.AUTH_DOMAIN,
