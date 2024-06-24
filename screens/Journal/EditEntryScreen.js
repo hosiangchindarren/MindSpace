@@ -1,8 +1,7 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ScrollView } from "react-native";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from "../../config/firebase";
-import moment from "moment";
 import { RichEditor, RichToolbar, actions } from "react-native-pell-rich-editor";
 
 const EditEntryScreen = ({ route, navigation }) => {
@@ -15,9 +14,11 @@ const EditEntryScreen = ({ route, navigation }) => {
     try {
       const entryDoc = doc(db, "journalEntries", entry.id);
       await updateDoc(entryDoc, { entry: entryText });
+      Alert.alert("Success", "Your journal entry has been updated!");
       navigation.goBack();
     } catch (error) {
       console.error("Error updating entry: ", error);
+      Alert.alert("Error", "Failed to update the journal entry.");
     }
   };
 
@@ -36,39 +37,56 @@ const EditEntryScreen = ({ route, navigation }) => {
     });
   }, [navigation, isEditing]);
 
-  const formattedDate = moment(entry.date).format('DD-MM-YYYY');
-  const formattedTime = moment(entry.date).format('HH:mm');
+  const customIconMap = {
+    [actions.setBold]: ({ tintColor }) => (
+      <Text style={{ ...styles.toolbarButton, color: tintColor }}>B</Text>
+    ),
+    [actions.setItalic]: ({ tintColor }) => (
+      <Text style={{ ...styles.toolbarButton, color: tintColor }}>I</Text>
+    ),
+    [actions.setUnderline]: ({ tintColor }) => (
+      <Text style={{ ...styles.toolbarButton, color: tintColor }}>U</Text>
+    ),
+    [actions.setStrikethrough]: ({ tintColor }) => (
+      <Text style={{ ...styles.toolbarButton, color: tintColor }}>S</Text>
+    ),
+    [actions.insertBulletsList]: ({ tintColor }) => (
+      <Text style={{ ...styles.toolbarButton, color: tintColor }}>•</Text>
+    ),
+  };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      <View style={styles.dateTimeContainer}>
-        <Text style={styles.label}>{formattedDate}</Text>
-        <Text style={styles.timeLabel}>{formattedTime}</Text>
-      </View>
-      <RichEditor
-        ref={richText}
-        initialContentHTML={entry.entry}
-        disabled={!isEditing}  // Disable editing when not in edit mode
-        style={styles.richEditor}
-      />
-      {isEditing && (
-        <View style={styles.toolbarContainer}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        {isEditing && (
           <RichToolbar
             editor={richText}
             actions={[
               actions.setBold,
               actions.setItalic,
               actions.setUnderline,
+              actions.setStrikethrough,
               actions.insertBulletsList,
             ]}
+            iconMap={customIconMap}
             style={styles.richTextToolbar}
           />
+        )}
+        <View style={styles.editorContainer}>
+          <RichEditor
+            ref={richText}
+            initialContentHTML={entry.entry}
+            disabled={!isEditing}
+            style={styles.richEditor}
+            useContainer={false}
+            containerStyle={styles.richEditorContainer}
+          />
         </View>
-      )}
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -77,46 +95,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#E6E6FA",
+    paddingTop: 16,
   },
-  dateTimeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 18,  // Add horizontal padding
-    marginBottom: 3,
-    marginTop: 3, // Reduce space here
+  editorContainer: {
+    flex: 1,
+    margin: 16,
+    marginTop: 0,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    overflow: 'hidden',
   },
-  label: {
-    fontSize: 18,
-    fontWeight: 'bold',  // Make the date text bold
-  },
-  timeLabel: {
-    fontSize: 18,
-    fontWeight: 'bold',  // Make the time text bold
+  richEditorContainer: {
+    flex: 1,
+    minHeight: 100,
   },
   richEditor: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#E6E6FA",
+    backgroundColor: "#fff",
     borderRadius: 8,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    marginBottom: 16,
-    marginTop: 0,  // Reduce space here
+    textAlignVertical: "top",
   },
   richTextToolbar: {
-    backgroundColor: "#4B0082",
+    backgroundColor: "#E6E6FA",
+    paddingBottom: 16,
   },
   headerButton: {
     color: "#4B0082",
     fontSize: 16,
     marginRight: 16,
   },
-  toolbarContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#4B0082",
-    padding: 8,
+  toolbarButton: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
