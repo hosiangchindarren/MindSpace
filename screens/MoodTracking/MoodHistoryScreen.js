@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   dateButton: {
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: 'black',
     padding: 10,
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
+    borderRadius: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     backgroundColor: '#fff',
