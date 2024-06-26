@@ -1,4 +1,5 @@
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
 const affirmations = [
@@ -34,10 +35,24 @@ export async function registerForPushNotificationsAsync() {
   return token;
 }
 
+async function getNextAffirmation() {
+  const lastIndex = await AsyncStorage.getItem('lastAffirmationIndex');
+  let newIndex = Math.floor(Math.random() * affirmations.length);
+
+  if (lastIndex !== null) {
+    while (newIndex == lastIndex) {
+      newIndex = Math.floor(Math.random() * affirmations.length);
+    }
+  }
+
+  await AsyncStorage.setItem('lastAffirmationIndex', newIndex.toString());
+  return affirmations[newIndex];
+}
+
 export async function scheduleDailyNotification() {
   await Notifications.cancelAllScheduledNotificationsAsync();
 
-  const randomAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)];
+  const randomAffirmation = await getNextAffirmation();
 
   await Notifications.scheduleNotificationAsync({
     content: {

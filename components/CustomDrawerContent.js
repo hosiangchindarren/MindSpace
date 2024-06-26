@@ -33,6 +33,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
           onPress={() => handleNavigate('Journal')}
           focused={state.index === 0}
           activeBackgroundColor="#E6E6FA"
+          activeTintColor='#4B0082'
           labelStyle={styles.drawerLabel}
         />
         <DrawerItem
@@ -41,6 +42,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
           onPress={() => handleNavigate('Mood Tracker')}
           focused={state.index === 1}
           activeBackgroundColor="#E6E6FA"
+          activeTintColor='#4B0082'
           labelStyle={styles.drawerLabel}
         />
         <DrawerItem
@@ -49,6 +51,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
           onPress={() => handleNavigate('Goals')}
           focused={state.index === 2}
           activeBackgroundColor="#E6E6FA"
+          activeTintColor='#4B0082'
           labelStyle={styles.drawerLabel}
         />
         <DrawerItem
@@ -57,6 +60,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
           onPress={() => handleNavigate('Forum')}
           focused={state.index === 3}
           activeBackgroundColor="#E6E6FA"
+          activeTintColor='#4B0082'
           labelStyle={styles.drawerLabel}
         />
         <DrawerItem
@@ -65,6 +69,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
           onPress={() => handleNavigate('Meditation')}
           focused={state.index === 4}
           activeBackgroundColor="#E6E6FA"
+          activeTintColor='#4B0082'
           labelStyle={styles.drawerLabel}
         />
         <DrawerItem
@@ -73,11 +78,12 @@ const CustomDrawerContent = ({ navigation, state }) => {
           onPress={() => handleNavigate('Calendar')}
           focused={state.index === 5}
           activeBackgroundColor="#E6E6FA"
+          activeTintColor='#4B0082'
           labelStyle={styles.drawerLabel}
         />
       </View>
       <View style={styles.signOutContainer}>
-        <Button title="Sign Out" onPress={handleSignOut} />
+        <Button title="Sign Out" color = '#4B0082' onPress={handleSignOut} />
       </View>
     </DrawerContentScrollView>
   );
