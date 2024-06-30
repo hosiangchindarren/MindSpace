@@ -22,14 +22,12 @@ export default {
       supportsTablet: true,
     },
     android: {
-      adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "white",
-      },
+      // Removed the adaptiveIcon configuration
+      package: "com.MindSpace.scapp",
     },
     notification: {
       icon: "./assets/notification-icon.png",
-      color: "white", 
+      color: "#ffffff", 
     },
     extra: {
       apiKey: process.env.API_KEY,
@@ -38,6 +36,9 @@ export default {
       storageBucket: process.env.STORAGE_BUCKET,
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID,
+      "eas": {
+        "projectId": "0eae4886-82da-4dd6-a44d-6db78641e863"
+      }
     },
   },
 };
