@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useCallback, useContext, useLayoutEffect } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db, auth } from "../../config/firebase";
 import moment from "moment";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
-import RenderHtml from 'react-native-render-html';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
-
 
 const ViewEntriesScreen = ({ navigation }) => {
   const { user } = useContext(AuthenticatedUserContext);
@@ -58,7 +56,9 @@ const ViewEntriesScreen = ({ navigation }) => {
 
   const extractFirstLine = (html) => {
     const match = html.match(/<[^>]*>([^<]*)<\/[^>]*>/);
-    return match ? match[0] : html.split('\n')[0];
+    const firstLine = match ? match[1] : html.split('\n')[0];
+    const maxLength = 100;
+    return firstLine.length > maxLength ? firstLine.substring(0, maxLength) + '...' : firstLine;
   };
 
   const showDatePicker = () => {
@@ -121,11 +121,9 @@ const ViewEntriesScreen = ({ navigation }) => {
           <View style={styles.entryContainer}>
             <TouchableOpacity style={styles.entry} onPress={() => navigation.navigate("Edit Entry", { entry: item })}>
               <Text style={styles.date}>{moment(item.date).format('DD-MM-YYYY HH:mm')}</Text>
-              <RenderHtml
-                contentWidth={400}
-                source={{ html: extractFirstLine(item.entry) }}
-                baseStyle={styles.text}
-              />
+              <Text style={styles.text}>
+                {extractFirstLine(item.entry)}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => deleteEntry(item.id)} style={styles.deleteButton}>
               <Icon name="trash" size={24} color="grey"/>
