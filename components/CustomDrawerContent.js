@@ -1,3 +1,4 @@
+// components/CustomDrawerContent.js
 import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -10,7 +11,10 @@ const CustomDrawerContent = ({ navigation, state }) => {
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
-      navigation.navigate('Login');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
     }).catch((error) => console.error('Error signing out: ', error));
   };
 
