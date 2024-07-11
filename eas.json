@@ -5,12 +5,37 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "API_KEY": "AIzaSyBSiNOrwcC0hVoqW1ZH_C-MTXV7SThGa7A",
+        "AUTH_DOMAIN": "mindspace-e6156.firebaseapp.com",
+        "PROJECT_ID": "mindspace-e6156",
+        "STORAGE_BUCKET": "mindspace-e6156.appspot.com",
+        "MESSAGING_SENDER_ID": "72758188709",
+        "APP_ID": "1:72758188709:android:ec0b1c505e4092f8ab0b4c"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "API_KEY": "AIzaSyBSiNOrwcC0hVoqW1ZH_C-MTXV7SThGa7A",
+        "AUTH_DOMAIN": "mindspace-e6156.firebaseapp.com",
+        "PROJECT_ID": "mindspace-e6156",
+        "STORAGE_BUCKET": "mindspace-e6156.appspot.com",
+        "MESSAGING_SENDER_ID": "72758188709",
+        "APP_ID": "1:72758188709:android:ec0b1c505e4092f8ab0b4c"
+      }
     },
-    "production": {}
+    "production": {
+      "env": {
+        "API_KEY": "AIzaSyBSiNOrwcC0hVoqW1ZH_C-MTXV7SThGa7A",
+        "AUTH_DOMAIN": "mindspace-e6156.firebaseapp.com",
+        "PROJECT_ID": "mindspace-e6156",
+        "STORAGE_BUCKET": "mindspace-e6156.appspot.com",
+        "MESSAGING_SENDER_ID": "72758188709",
+        "APP_ID": "1:72758188709:android:ec0b1c505e4092f8ab0b4c"
+      }
+    }
   },
   "submit": {
     "production": {}
