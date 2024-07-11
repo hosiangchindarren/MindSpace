@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import moment from "moment";
@@ -142,15 +142,23 @@ const CalendarScreen = ({ navigation }) => {
     }
   };
 
-  const filterReminders = debounce((query) => {
-    if (query) {
-      const filtered = reminders.filter(reminder => reminder.title.toLowerCase().includes(query.toLowerCase()));
-      setFilteredReminders(filtered);
-    } else {
-      setFilteredReminders(reminders);
-    }
+  const filterReminders = useMemo(
+    () =>
+      debounce((query) => {
+        if (query) {
+          const filtered = reminders.filter(reminder => reminder.title.toLowerCase().includes(query.toLowerCase()));
+          setFilteredReminders(filtered);
+        } else {
+          setFilteredReminders(reminders);
+        }
+      }, 300),
+    [reminders]
+  );
+
+  const handleSearchQueryChange = useCallback((query) => {
     setSearchQuery(query);
-  }, 300);
+    filterReminders(query);
+  }, [filterReminders]);
 
   const handleConfirm = (date) => {
     const filtered = reminders.filter(reminder => moment(reminder.date).isSame(date, 'day'));
@@ -192,94 +200,96 @@ const CalendarScreen = ({ navigation }) => {
     navigation.navigate('Add Reminder', { date: day.dateString });
   };
 
+  const ListHeader = useMemo(() => (
+    <>
+      <Calendar
+        markedDates={markedDates}
+        markingType={'multi-dot'}
+        onDayPress={handleDayPress}
+      />
+      <View style={styles.legendContainer}>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendDot, { backgroundColor: 'red' }]} />
+          <Text style={styles.legendText}>Journal Entry</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendDot, { backgroundColor: 'blue' }]} />
+          <Text style={styles.legendText}>Mood Entry</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendDot, { backgroundColor: 'green' }]} />
+          <Text style={styles.legendText}>Reminder</Text>
+        </View>
+      </View>
+      <View style={styles.streakContainer}>
+        <FireEffect source={require('../../assets/JournalStreak.png')}>
+          <Text style={styles.streakText}>
+            {streak > 0 ? (
+              <>
+                {`${streak}-Day`}
+                {"\n"}
+                Journaling Streak
+                {"\n"}
+                Keep it up!
+              </>
+            ) : (
+              <>
+                Do a journal entry
+                {"\n"}
+                to start your
+                {"\n"}
+                streak!
+              </>
+            )}
+          </Text>
+        </FireEffect>
+        <FireEffect source={require('../../assets/MoodStreak.png')}>
+          <Text style={styles.streakText}>
+            {moodStreak > 0 ? (
+              <>
+                {`${moodStreak}-Day`}
+                {"\n"}
+                Mood Tracking Streak
+                {"\n"}
+                Keep it up!
+              </>
+            ) : (
+              <>
+                Do a mood entry
+                {"\n"}
+                to start your
+                {"\n"}
+                streak!
+              </>
+            )}
+          </Text>
+        </FireEffect>
+      </View>
+      <Text style={styles.upcomingRemindersTitle}>Upcoming Reminders</Text>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search reminders by title"
+          value={searchQuery}
+          onChangeText={handleSearchQueryChange}
+        />
+        <TouchableOpacity onPress={showDatePicker}>
+          <Ionicons name="calendar" size={24} color="#4B0082" />
+        </TouchableOpacity>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+      </View>
+    </>
+  ), [markedDates, streak, moodStreak, searchQuery, handleSearchQueryChange, isDatePickerVisible]);
+
   return (
     <FlatList
       style={styles.container}
-      ListHeaderComponent={() => (
-        <>
-          <Calendar
-            markedDates={markedDates}
-            markingType={'multi-dot'}
-            onDayPress={handleDayPress}
-          />
-          <View style={styles.legendContainer}>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: 'red' }]} />
-              <Text style={styles.legendText}>Journal Entry</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: 'blue' }]} />
-              <Text style={styles.legendText}>Mood Entry</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: 'green' }]} />
-              <Text style={styles.legendText}>Reminder</Text>
-            </View>
-          </View>
-          <View style={styles.streakContainer}>
-            <FireEffect source={require('../../assets/JournalStreak.png')}>
-              <Text style={styles.streakText}>
-                {streak > 0 ? (
-                  <>
-                    {`${streak}-Day`}
-                    {"\n"}
-                    Journaling Streak
-                    {"\n"}
-                    Keep it up!
-                  </>
-                ) : (
-                  <>
-                    Do a journal entry
-                    {"\n"}
-                    to start your
-                    {"\n"}
-                    streak!
-                  </>
-                )}
-              </Text>
-            </FireEffect>
-            <FireEffect source={require('../../assets/MoodStreak.png')}>
-              <Text style={styles.streakText}>
-                {moodStreak > 0 ? (
-                  <>
-                    {`${moodStreak}-Day`}
-                    {"\n"}
-                    Mood Tracking Streak
-                    {"\n"}
-                    Keep it up!
-                  </>
-                ) : (
-                  <>
-                    Do a mood entry
-                    {"\n"}
-                    to start your
-                    {"\n"}
-                    streak!
-                  </>
-                )}
-              </Text>
-            </FireEffect>
-          </View>
-          <Text style={styles.upcomingRemindersTitle}>Upcoming Reminders</Text>
-          <View style={styles.searchContainer}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search reminders by title"
-              value={searchQuery}
-              onChangeText={filterReminders}
-            />
-            <TouchableOpacity onPress={showDatePicker}>
-              <Ionicons name="calendar" size={24} color="#4B0082" />
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
-        </>
-      )}
+      ListHeaderComponent={ListHeader}
       data={filteredReminders.filter(reminder => moment(reminder.date).isSameOrAfter(moment(), 'day'))}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
@@ -377,4 +387,3 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarScreen;
-
