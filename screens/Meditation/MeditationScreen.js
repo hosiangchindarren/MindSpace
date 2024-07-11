@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Audio } from 'expo-av';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const MeditationScreen = () => {
-  const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState('Meditation Exercises');
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
-  const [userTimeInput, setUserTimeInput] = useState('');
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [sound, setSound] = useState(null);
 
@@ -58,16 +58,27 @@ const MeditationScreen = () => {
     "This form uses bowls, gongs, and other instruments to create sound vibrations that help focus the mind and bring it into a more relaxed state."
   ]
 
-  const handleUserTimeInputChange = (text) => {
-    setUserTimeInput(text);
-  };
-
   const handleTabPress = (tab) => {
     setSelectedTab(tab);
   };
 
   const handleHeaderPress = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleConfirm = (selectedTime) => {
+    const totalSeconds = selectedTime.getHours() * 3600 + selectedTime.getMinutes() * 60 + selectedTime.getSeconds();
+    setTimerSeconds(totalSeconds);
+    setTimerActive(true);
+    hideTimePicker();
   };
 
   useFocusEffect(
@@ -99,21 +110,6 @@ const MeditationScreen = () => {
     }
     return () => clearInterval(interval);
   }, [timerActive, timerSeconds]);
-
-  const handleSetTime = () => {
-    const timeInMinutes = parseInt(userTimeInput);
-    if (!isNaN(timeInMinutes)) {
-      setTimerSeconds(timeInMinutes * 60);
-      setUserTimeInput('');
-      startTimer();
-    }
-  };
-
-  const startTimer = () => {
-    const timeInSeconds = parseInt(userTimeInput) * 60;
-    setTimerActive(true);
-    setTimerSeconds(timeInSeconds);
-  };
 
   const stopTimer = () => {
     setTimerActive(false);
@@ -203,19 +199,22 @@ const MeditationScreen = () => {
         </ScrollView>
       ) : (
         <View style={styles.timerInputContainer}>
-          <TextInput
-            style={styles.timerInput}
-            placeholder="Enter time in minutes"
-            keyboardType="numeric"
-            value={userTimeInput}
-            onChangeText={handleUserTimeInputChange}
-          />
-          <TouchableOpacity onPress={handleSetTime} style={styles.setTimerButton}>
+          <TouchableOpacity onPress={showTimePicker} style={styles.setTimerButton}>
             <Text style={styles.setTimerButtonText}>Set Time</Text>
           </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isTimePickerVisible}
+            mode="time"
+            is24Hour={true}
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onConfirm={handleConfirm}
+            onCancel={hideTimePicker}
+            minuteInterval={1}
+          />
           <View style={styles.timerDisplay}>
             <Text style={styles.timerText}>
-              {Math.floor(timerSeconds / 60).toString().padStart(2, '0')}:
+              {Math.floor(timerSeconds / 3600).toString().padStart(2, '0')}:
+              {Math.floor((timerSeconds % 3600) / 60).toString().padStart(2, '0')}:
               {(timerSeconds % 60).toString().padStart(2, '0')}
             </Text>
             {timerActive && (
@@ -308,15 +307,6 @@ const styles = StyleSheet.create({
   timerInputContainer: {
     alignItems: 'center',
     padding: 20,
-  },
-  timerInput: {
-    borderWidth: 1,
-    borderColor: '#4B0082',
-    borderRadius: 10,
-    padding: 10,
-    width: '80%',
-    textAlign: 'center',
-    marginBottom: 10,
   },
   setTimerButton: {
     padding: 10,
