@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, Image } 
 import { collection, onSnapshot, deleteDoc, query, orderBy, doc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { AuthenticatedUserContext } from "../../providers/AuthenticatedUserProvider";
-import Icon from 'react-native-vector-icons/FontAwesome'; // Make sure to import the icon library
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 const ForumScreen = ({ navigation }) => {
   const { user } = useContext(AuthenticatedUserContext);
