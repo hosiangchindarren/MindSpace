@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, doc, deleteDoc, orderBy } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AuthenticatedUserContext } from '../../providers/AuthenticatedUserProvider';
 import { FontAwesome } from '@expo/vector-icons';
 
-// Mood mapping with emojis
 const moodEmojis = {
   Happy: '😃',
   Content: '😊',
@@ -20,6 +19,7 @@ const MoodHistoryScreen = ({ defaultSearchDate = null }) => {
   const [moods, setMoods] = useState([]);
   const [searchDate, setSearchDate] = useState(defaultSearchDate);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [sortOrder, setSortOrder] = useState("desc");
 
   useEffect(() => {
     if (user) {
@@ -41,15 +41,23 @@ const MoodHistoryScreen = ({ defaultSearchDate = null }) => {
   };
 
   const filterMoodsByDate = () => {
-    if (!searchDate) return moods;
-
-    return moods.filter((mood) => {
-      const moodDate = new Date(mood.createdAt.toDate());
-      return (
-        moodDate.getDate() === searchDate.getDate() &&
-        moodDate.getMonth() === searchDate.getMonth() &&
-        moodDate.getFullYear() === searchDate.getFullYear()
-      );
+    let filteredMoods = moods;
+    if (searchDate) {
+      filteredMoods = filteredMoods.filter((mood) => {
+        const moodDate = new Date(mood.createdAt.toDate());
+        return (
+          moodDate.getDate() === searchDate.getDate() &&
+          moodDate.getMonth() === searchDate.getMonth() &&
+          moodDate.getFullYear() === searchDate.getFullYear()
+        );
+      });
+    }
+    return filteredMoods.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.createdAt.toDate() - b.createdAt.toDate();
+      } else {
+        return b.createdAt.toDate() - a.createdAt.toDate();
+      }
     });
   };
 
@@ -70,6 +78,10 @@ const MoodHistoryScreen = ({ defaultSearchDate = null }) => {
     setSearchDate(null);
   };
 
+  const toggleSortOrder = () => {
+    setSortOrder((prevSortOrder) => (prevSortOrder === "desc" ? "asc" : "desc"));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
@@ -78,6 +90,14 @@ const MoodHistoryScreen = ({ defaultSearchDate = null }) => {
             {searchDate ? searchDate.toDateString() : 'Select a date'}
           </Text>
         </TouchableOpacity>
+        {!searchDate && (
+          <TouchableOpacity onPress={toggleSortOrder} style={styles.sortButton}>
+            <Image
+              source={sortOrder === "desc" ? require('../../assets/sort-desc.png') : require('../../assets/sort-asc.png')}
+              style={styles.sortIcon}
+            />
+          </TouchableOpacity>
+        )}
         {searchDate && (
           <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
             <Text style={styles.resetButtonText}>Reset</Text>
@@ -120,6 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
+    alignItems: 'center',
   },
   dateButton: {
     borderRadius: 8,
@@ -135,12 +156,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
   },
+  sortButton: {
+    padding: 10,
+    marginLeft: 10,
+  },
+  sortIcon: {
+    width: 24,
+    height: 24,
+  },
   resetButton: {
     borderWidth: 1,
     borderColor: 'black',
     padding: 10,
     backgroundColor: '#4B0082',
     alignItems: 'center',
+    marginLeft: 10,
   },
   resetButtonText: {
     fontSize: 16,
