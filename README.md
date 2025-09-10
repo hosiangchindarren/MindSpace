@@ -6,10 +6,6 @@
 
 https://docs.google.com/document/d/1SRgPVN5KKUfDGZsgG2oywxG7FnQ7_LoE/edit
 
-**Proposed Level of Achievement:**
-
-Project Gemini
-
 **Motivation** 
 
 As university students, my project partner and I have observed that mindfulness is not well known among our peers. Many have either never heard of it or are unsure of its meaning. Additionally, they face numerous barriers to practicing mindfulness, such as a lack of time, the inconvenience of traditional journaling, and uncertainty about how to begin. Motivated by these challenges, we aimed to create MindSpace, a mobile application that leverages technology to make mindfulness accessible and convenient. Our goal is to help individuals integrate mindfulness into their daily lives, overcoming obstacles and promoting mental well-being.
